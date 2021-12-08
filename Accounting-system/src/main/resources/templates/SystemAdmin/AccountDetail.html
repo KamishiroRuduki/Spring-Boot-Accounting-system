@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2.html}">
+<head>
+  <title>Account Detail</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <h2>流水帳管理</h2>
+   <table>
+    <tr>
+     <td>
+      流水帳紀錄
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+  </svg>
+  流水帳管理
+     </td>
+    </tr>
+    <tr>
+     <td>收/支 <select name="ActType" id="ActType">
+						<option value="In">In</option>
+						<option value="Out">Out</option>
+				</select><br/> 
+		 分類 <select name="PrivateType" id="PrivateType">
+						<option value="Private1">我的分類1</option>
+						<option value="Private2">我的分類2</option>
+				</select><br />
+		 金額 <input type="text" name="txtMoney" id="txtMoney" style="width: 400px" /><br /><br />
+		 標題 <input type="text" name="txtTitle" id="txtTitle" style="width: 400px" /><br /><br />
+		 備註 <input type="text" name="txtCaption" id="txtCaption" style="height: 300px; width: 400px" /><br /><br />
+		 
+				</td>
+    </tr>
+    <tr>
+     <td>
+      <input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />
+     </td>
+    </tr>
+
+     
+   </table>
+</div>
+</body>
+</html>

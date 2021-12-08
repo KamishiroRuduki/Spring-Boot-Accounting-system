@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2.html}">
+<head>
+  <title>User List</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <h2>會員管理</h2>
+      管理者後台
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+  </svg>
+  會員管理
+
+<div id = userOne>
+<table>
+<tr><td>帳號</td><td>[[${Account}]]</td></tr>
+<tr><td>姓名</td><td> <input type="text" name="txtName" id="txtName" th:value="${name}" /></td></tr>
+<tr><td>Email</td><td><input type="email" name="txtEmail" id="txtEmail" th:value="${email}" /></td></tr>
+<tr><td>等級</td><td><select name="AccountType" id="AccountType">
+						<option value="user">一般會員</option>
+						<option value="manger">管理者</option>
+				</select></td></tr>
+</table>
+建立時間 &emsp; [[${CreatTime}]]<hr>
+修改時間 &emsp; [[${UpateTime}]]<hr>
+      <input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" /> &nbsp;&nbsp;
+      <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Delete" id="btnDel" />&emsp; &nbsp;&ensp;<br/>
+</div>
+</div>
+</body>
+</html>

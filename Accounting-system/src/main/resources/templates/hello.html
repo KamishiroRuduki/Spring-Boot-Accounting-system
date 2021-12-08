@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <link th:href="@{Scripts/css/bootstrap.css}" rel="stylesheet">
+ <script th:src="@{Scripts/jquery-3.6.0.min.js}"></script>
+ <script th:src="@{Scripts/js/bootstrap.js}"></script>
+
+ <meta charset="UTF-8" />
+<title>Hello Thymeleaf</title>
+ 
+ <style type="text/css">
+  #body {
+   margin-top: 50px;
+   margin-left: 50px;
+  }
+ </style>
+</head>
+<body>
+	<h1 th:text="${message}"></h1>
+	<h1 th:text="${message}"></h1>
+	<!-- 文字列 -->
+<span th:text="'some text'"></span>
+<!-- 数値 -->
+<span th:text="123"></span>
+<!-- 真偽値 -->
+<span th:text="true"></span>
+<!-- null -->
+<span th:text="null"></span>
+	<form action="#" th:action="@{/login}" th:object="${user}" method="post">
+		<input type="text" id="name" name="name" required >
+		<input type="text" id="password" name="password" required >
+		<input type="submit">
+	</form>
+	
+</body>
+</html>
