@@ -15,7 +15,7 @@ import com.ubayKyu.accountingSystem.entity.AccountingNote;
 
 @Repository
 public interface AccountingNoteRepository extends JpaRepository<AccountingNote,Integer>{
-	List<AccountingNote> findAll();
+	//List<AccountingNote> findAll();
 	
     @Query(value = "SELECT Min(accounting_note.create_date)"
     		+ "FROM accounting_note"

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 	@Autowired
 	HttpSession session;
-
+	
  public boolean Find(String name, String password) {
   boolean b = false;
   

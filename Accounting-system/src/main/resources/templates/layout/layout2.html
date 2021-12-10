@@ -14,6 +14,18 @@
 <script type="text/javascript"
 	th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
  <script>
+ $(function () { 
+ // document.getElementById('image').src = "https://icons.getbootstrap.com/assets/icons/person.svg";
+    var level = "[[${session.UserLevel}]]";
+    if(level == 0){
+      $("#image").attr('src',"https://icons.getbootstrap.com/assets/icons/person.svg"); 
+      $("#divManagerBc").hide(); 
+    }
+    else if(level == 1){
+      $("#image").attr('src',"https://icons.getbootstrap.com/assets/icons/person-plus-fill.svg"); 
+    }
+ });
+ 
   function forward() {
    setTimeout("forward()", 100);
    history.forward();
@@ -22,15 +34,23 @@
    history.forward(); //for IE、Edge
   else
    setTimeout("forward()", 100); //for Chrome、Firefox
+   
+
  </script>
+<style>
+.menu {
+position: fixed;
+}
+
+</style>
 </head>
 
 <body>
-	<div>
-		<table>
+	<div >
+		<table >
 			<tr>
 				<td class="collapse" id="navbarToggleExternalContent" valign="top" rowspan="2" height="930px" width="300px"
-					style="background-color: #e3f2fd"><br />
+					style="background-color: #e3f2fd" ><br />
 					<h2>&nbsp;&nbsp;流水帳管理系統</h2>     <!--左側超連結由此編輯 -->
          <div id="divManagerBc" >
           &emsp;&emsp;&emsp;
@@ -65,12 +85,13 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-      </svg>&nbsp;<a href="/SystemAdmin/AccountList">流水帳管理</a>
+      </svg>&nbsp;<a href="/SystemAdmin/AccountingList">流水帳管理</a>
       <br />&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-      </svg>&nbsp;<a href="/SystemAdmin/CategoryList">流水帳分類管理</a>
+      </svg>&nbsp;<a th:href="@{/SystemAdmin/CategoryList(id=${session.LoginState.getId()})}">流水帳分類管理</a>
+<!--       href="/SystemAdmin/CategoryList?id="+ [[${session.userid}]] -->
    <!--    <div id="divManagerBc" >
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
@@ -111,9 +132,10 @@
 									style="height: 50%; margin-top: 30px; display: inline-block; vertical-align: middle">
 								<button class="btn btn-outline-success" type="submit"
 									style="height: 50%; margin-top: 30px; display: inline-block; vertical-align: middle">Search</button>
-                            <button type="button" th:onclick="|window.location.href='/logout-button'|" id="logout-button"> <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <button type="button" th:onclick="|window.location.href='/logout-button'|" id="logout-button"> <img src="" id="image" name="image" width="50" height="50" /></button>
+                            <!--   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                           </svg> </button>
+                           </svg> </button>-->
                               
 							</form>
 						</div>

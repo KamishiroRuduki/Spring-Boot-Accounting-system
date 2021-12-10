@@ -38,7 +38,7 @@ public class loginController {
 			return "login.html";
 		}
 		else {
-            String url = "/SystemAdmin/AccountList";
+            String url = "/SystemAdmin/AccountingList";
             return "redirect:" + url;
 		}
 	}
@@ -77,16 +77,18 @@ public class loginController {
         UserInfo2 userInfo = UserInfoRepository2.GetUserLogin(account, password);
 
         if (userInfo != null) {
+        	int userLevel = userInfo.getUserLevel();
             result = true;
             // 寫入session
             String state = "Suscess";
+        	session.setAttribute("UserLevel", userLevel);
             session.setAttribute("LoginState", userInfo);
         }
 
         if (result == true) {// 如果成功
         	redirAttrs.addFlashAttribute("message", "登入成功");
         	//model.addAttribute("message", "登入成功");
-            String url = "/SystemAdmin/AccountList"; // 重新導向到指定的url
+            String url = "/SystemAdmin/AccountingList"; // 重新導向到指定的url
             return "redirect:" + url; // 重新導向到指定的url
         } else {// 如果失敗
         	
