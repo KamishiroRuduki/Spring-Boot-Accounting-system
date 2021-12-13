@@ -5,6 +5,11 @@
 	layout:decorate="~{layout/layout2.html}">
 <head>
 <title>Category List</title>
+ <script>
+ $(function () { 
+	 $("#tblCategory").tablepage($("#table_page"), 10); //TABLE換頁功能，""("#table_page"),"後面的數字是每一頁的筆數
+ });
+ </script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -25,14 +30,14 @@
 				<a th:href="@{/SystemAdmin/CategoryDetail(id=${session.LoginState.getId()})}">
 				<input type="button"  class="btn btn-outline-dark" name="btnCategoryAdd" value="Add" id="btnCategoryAdd" /></a>
 				 &nbsp;&nbsp; 
-                <input type="submit" th:onclick="@{|window.location.href='/SystemAdmin/CategoryList?id=${session.LoginState.getId()}'|}" class="btn btn-outline-dark" name="btnCategoryDel" value="Del" id="btnCategoryDel" />&emsp; &nbsp;&ensp;
+                <input type="submit" class="btn btn-outline-dark" name="btnCategoryDel" value="Del" id="btnCategoryDel" onclick="return confirm('確定要刪除已勾選的分類嗎?')" />&emsp; &nbsp;&ensp;
 
 			   </td>
 			</tr>
 			<tr>
 				<td>
 					<table cellspacing="0" cellpadding="4"
-						id="ContentPlaceHolder1_gvAccountingList"
+						id="tblCategory"
 						style="color: #333333; border-collapse: collapse;">
 						<tr
 							style="color: White; background-color: #507CD1; font-weight: bold;">
@@ -53,6 +58,7 @@
 
 
 					</table>
+					<span id="table_page"></span>
 				</td>
 			</tr>
 

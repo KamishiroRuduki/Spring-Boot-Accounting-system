@@ -31,7 +31,15 @@ public interface CategoryRepository extends JpaRepository<Category,String>{
 			+ "  WHERE category.userid =:userid"
 			+ "  GROUP   BY category.categoryid ,category.body ,category.caption ,category.create_date,category.userid", nativeQuery = true)
 	List<CategoryInterFace> FindCategoryModelListByUserid(@Param("userid") String userid);
+	
+	@Query(value = "  SELECT COUNT(accounting_note.categoryid) count"
+			+ "  FROM category category"
+			+ "  LEFT JOIN accounting_note accounting_note   ON accounting_note.categoryid = category.categoryid"
+			+ "  WHERE category.categoryid =:categoryid"
+			+ "  GROUP   BY category.categoryid", nativeQuery = true)
+	int FindCountByCategoryid(@Param("categoryid") String categoryid);
 
+	
 	
 
 }

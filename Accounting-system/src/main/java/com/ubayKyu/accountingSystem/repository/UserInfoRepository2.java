@@ -12,7 +12,6 @@ import com.ubayKyu.accountingSystem.entity.UserInfo2;
 
 @Repository
 public interface UserInfoRepository2 extends JpaRepository<UserInfo2,String>{
-	List<UserInfo2> findAll();
 
     @Query(value = "SELECT [id]"
             + "      ,[account]"
