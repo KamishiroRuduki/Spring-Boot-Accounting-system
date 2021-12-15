@@ -24,6 +24,7 @@ import com.ubayKyu.accountingSystem.repository.UserInfoRepository2;
 import com.ubayKyu.accountingSystem.dto.CategoryModel;
 import com.ubayKyu.accountingSystem.entity.Category;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
+import com.ubayKyu.accountingSystem.entity.UserInfo2;
 import com.ubayKyu.accountingSystem.service.LoginService;
 import com.ubayKyu.accountingSystem.service.UserInfoService;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,7 +40,7 @@ public class CategoryListController {
 	private CategoryService CategoryService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String CategoryList(@RequestParam(value = "id") String userid, Model model) {
+	public String CategoryList(Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if (!loginCheck)// 檢查是否有登入
 		{
@@ -47,9 +48,11 @@ public class CategoryListController {
 			LoginService.LoginSessionRemove(session);
 			return "redirect:" + url;
 		}
-
+		
+		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");
+		System.out.println(User.getId());
 		// 用從UDL取得的ID去DB撈資料，並放進自定義的分類Model
-		List<CategoryInterFace> CategoryModelList = CategoryService.getCategoryModelByUserid(userid);
+		List<CategoryInterFace> CategoryModelList = CategoryService.getCategoryModelByUserid(User.getId());
 		//List<CategoryInterFace> CategoryModelList = CategoryRepository.FindCategoryModelListByUserid(userid);
 		model.addAttribute("CategoryModelList", CategoryModelList);// 將自定義的分類Model傳至前台
 		return "SystemAdmin/CategoryList.html";
@@ -59,8 +62,7 @@ public class CategoryListController {
 	 分類頁表頁，做分類刪除
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String CategoryListDel(@RequestParam(value = "id") String userid,
-			@RequestParam(value = "chbCategoryDel", required = false) String[] categoryDel, 
+	public String CategoryListDel(@RequestParam(value = "chbCategoryDel", required = false) String[] categoryDel, 
 			RedirectAttributes redirAttrs,Model model) {		
 		//@RequestParam(value = "categoryCount", required = false) String[] categoryCount,
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
@@ -87,7 +89,7 @@ public class CategoryListController {
 		}
 
 		
-		String url = "/SystemAdmin/CategoryList?id=" + userid;
+		String url = "/SystemAdmin/CategoryList";
 		return "redirect:" + url;
 	}
 

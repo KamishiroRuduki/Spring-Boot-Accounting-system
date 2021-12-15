@@ -14,7 +14,7 @@
 <body>
 	<div layout:fragment="content">
 		<h2>流水帳分類管理</h2>
-		<form method="post" action="#" th:action="@{|CategoryList?id=${session.LoginState.getId()}|}" id="form1">
+		<form method="post" action="#" th:action="@{|CategoryList|}" id="form1">
 		<table>
 			<tr>
 				<td>流水帳紀錄 <svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -27,7 +27,7 @@
 			</tr>
 			<tr>
 				<td>
-				<a th:href="@{/SystemAdmin/CategoryDetail(id=${session.LoginState.getId()})}">
+				<a th:href="@{/SystemAdmin/CategoryDetail}">
 				<input type="button"  class="btn btn-outline-dark" name="btnCategoryAdd" value="Add" id="btnCategoryAdd" /></a>
 				 &nbsp;&nbsp; 
                 <input type="submit" class="btn btn-outline-dark" name="btnCategoryDel" value="Del" id="btnCategoryDel" onclick="return confirm('確定要刪除已勾選的分類嗎?')" />&emsp; &nbsp;&ensp;
@@ -52,7 +52,7 @@
 							<td th:text="${CategoryInterFace.getcreate_date()}">CreateDate</td>
 							<td th:text="${CategoryInterFace.getcaption()}">Caption</td>
 							<td th:text="${CategoryInterFace.getcount()}">Count</td>					
-							<td><a th:href="@{/SystemAdmin/CategoryDetail(id=${session.LoginState.getId()},CategoryID=${CategoryInterFace.getcategoryid()})}">Edit</a>
+							<td><a th:href="@{/SystemAdmin/CategoryDetail(CategoryID=${CategoryInterFace.getcategoryid()})}">Edit</a>
 							</td>
 						</tr>
 

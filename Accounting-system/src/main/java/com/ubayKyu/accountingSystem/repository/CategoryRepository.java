@@ -38,6 +38,14 @@ public interface CategoryRepository extends JpaRepository<Category,String>{
 			+ "  WHERE category.categoryid =:categoryid"
 			+ "  GROUP   BY category.categoryid", nativeQuery = true)
 	int FindCountByCategoryid(@Param("categoryid") String categoryid);
+	
+	
+	@Query(value = "  SELECT COUNT(*)"
+			+ "  FROM  category"
+			+ "  WHERE userid =:userid AND caption =:caption", nativeQuery = true)
+	int FindCategoryCaptionByCaptionAndUserID(@Param("userid") String userid, @Param("caption") String caption);
+	
+	
 
 	
 	
