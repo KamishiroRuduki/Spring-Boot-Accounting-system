@@ -5,6 +5,11 @@
       layout:decorate="~{layout/layout2.html}">
 <head>
   <title>Account List</title>
+   <script>
+ $(function () { 
+	 $("#tblCategory").tablepage($("#table_page"), 10); //TABLE換頁功能，""("#table_page"),"後面的數字是每一頁的筆數
+ });
+ </script>
 </head>
 
 
@@ -12,6 +17,7 @@
 <body>
 <div layout:fragment="content">
    <h2>流水帳管理</h2>
+		<form method="post" action="#" th:action="@{|AccountingList|}" id="form1">  		
    <table>
     <tr>
      <td>
@@ -24,11 +30,10 @@
     </tr>
     <tr>
      <td>
-      <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" /> &nbsp;&nbsp;
+	  <a th:href="@{/SystemAdmin/AccountingDetail}">
+	  <input type="button"  class="btn btn-outline-dark" name="btnCategoryAdd" value="Add" id="btnCategoryAdd" /></a> &nbsp;&nbsp;
       <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />&emsp; &nbsp;&ensp;
-      小計 [[${money}]]元
-      小計 [[${Name}]]元
-      小計 [[${PWD}]]元
+      小計 [[${subtotal}]]元&nbsp;&nbsp; 當月小計 [[${subtotalofmonth}]]元
      </td>
     </tr>
     <tr>
@@ -41,104 +46,53 @@
     </td>
    </tr>
    <tr>
-    <td>
-
-     
-      <table cellspacing="0" cellpadding="4"
-       id="ContentPlaceHolder1_gvAccountingList"
-       style="color: #333333; border-collapse: collapse;">
-       <tr
-        style="color: White; background-color: #507CD1; font-weight: bold;">
-        <th scope="col">建立日期</th>
-        <th scope="col">收 / 支</th>
-        <th scope="col">金額</th>
-        <th scope="col">標題</th>
-        <th scope="col">編輯</th>
-       </tr>
-       <tr style="background-color: #EFF3FB;">
-        <td>2021-08-19</td>
-        <td><span
-         id="ContentPlaceHolder1_gvAccountingList_lblActType_0"
-         style="color: Blue;">收入</span></td>
-        <td>35456</td>
-        <td>453645645655</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
-        </td>
-       </tr>
-       <tr style="background-color: White;">
-        <td>2021-08-19</td>
-        <td><span
-         id="ContentPlaceHolder1_gvAccountingList_lblActType_1"
-         style="color: Blue;">收入</span></td>
-        <td>123</td>
-        <td>QWE</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=6">修改</a>
-        </td>
-       </tr>
-       <tr style="background-color: #EFF3FB;">
-        <td>2021-08-12</td>
-        <td><span
-         id="ContentPlaceHolder1_gvAccountingList_lblActType_2"
-         style="color: Blue;">收入</span></td>
-        <td>123</td>
-        <td>QWE</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=7">修改</a>
-        </td>
-       </tr>
-       <tr style="background-color: White;">
-        <td>2021-08-12</td>
-        <td><span
-         id="ContentPlaceHolder1_gvAccountingList_lblActType_3"
-         style="color: Blue;">收入</span></td>
-        <td>123</td>
-        <td>QWE</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=8">修改</a>
-        </td>
-       </tr>
-       <tr style="background-color: #EFF3FB;">
-        <td>2021-08-12</td>
-        <td><span
-         id="ContentPlaceHolder1_gvAccountingList_lblActType_4"
-         style="color: Blue;">收入</span></td>
-        <td>123</td>
-        <td>QWE</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=9">修改</a>
-        </td>
-       </tr>
-      </table>
-      
-<!--       					<table cellspacing="0" cellpadding="4" -->
-<!-- 						id="tblCategory" -->
-<!-- 						style="color: #333333; border-collapse: collapse;"> -->
-<!-- 						<tr style="color: White; background-color: #507CD1; font-weight: bold;"> -->
-<!--         <th scope="col">建立日期</th> -->
-<!--         <th scope="col">收 / 支</th> -->
-<!--         <th scope="col">金額</th> -->
-<!--         <th scope="col">標題</th> -->
-<!--         <th scope="col">編輯</th> -->
-<!-- 						</tr> -->
-<!-- 						<tr style="background-color: #EFF3FB;" th:each="CategoryInterFace,status : ${CategoryModelList}"> -->
-<!-- 							<td><input type="checkbox" id="chbCategoryDel" name="chbCategoryDel" th:value = ${CategoryInterFace.getcategoryid()}></td> -->
-<!-- 							<td th:text="${CategoryInterFace.getcreate_date()}">CreateDate</td> -->
-<!-- 							<td th:text="${CategoryInterFace.getcaption()}">Caption</td> -->
-<!-- 							<td th:text="${CategoryInterFace.getcount()}">Count</td>					 -->
-<!-- 							<td><a th:href="@{/SystemAdmin/CategoryDetail(CategoryID=${CategoryInterFace.getcategoryid()})}">Edit</a> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
+							<td>
 
 
-<!-- 					</table> -->
-<!-- 					<span id="table_page"></span> -->
-     </td>
-    </tr>
+
+
+								<table cellspacing="0" cellpadding="4" id="tblCategory"
+									style="color: #333333; border-collapse: collapse;">
+									<tr
+										style="color: White; background-color: #507CD1; font-weight: bold;">
+										<th scope="col"></th>
+										<th scope="col">建立日期</th>
+										<th scope="col">分類</th>
+										<th scope="col">收 / 支</th>
+										<th scope="col">金額</th>
+										<th scope="col">標題</th>
+										<th scope="col">Act</th>
+									</tr>
+									<tr th:each="AccountingNoteInterFace:${AccountingNoteList}">
+										<td><input type="checkbox" id="ckbDelete"
+											name="ckbDelete"
+											th:value=${AccountingNoteInterFace.getaccid()}></td>
+										<td th:text="${AccountingNoteInterFace.getcreate_date()}">CreateDate</td>
+<!-- 										<td th:text="${AccountingNoteInterFace.getcategory_caption()}">CategoryCaption</td> -->
+										<td th:text="${AccountingNoteInterFace.getcategory_caption()} == NULL ? '未分類' : ${AccountingNoteInterFace.getcategory_caption()}">CategoryCaption</td>
+										<td
+											th:text="${AccountingNoteInterFace.getact_type()} == 1 ? '收入' : '支出'">ActType</td>
+										<td
+											th:styleappend="${AccountingNoteInterFace.getact_type()} == 1 ? 'color:Blue;' : 'color:Red;'"
+											th:text="${AccountingNoteInterFace.getact_type()} == 1 ? ${AccountingNoteInterFace.getamount()} : '('+${AccountingNoteInterFace.getamount()}+')'">Amount
+										</td>
+										<td th:text="${AccountingNoteInterFace.getcaption()}">Caption</td>
+										<td><a
+											th:href="@{/SystemAdmin/AccountingDetail(accID=${AccountingNoteInterFace.getaccid()})}">Edit</a></td>
+									</tr>
+
+
+								</table> <span id="table_page"></span>
+							</td>
+						</tr>
 
      
    </table>
+       </tr>
+
+     
+   </table>
+   </form>
 </div>
 </body>
 </html>

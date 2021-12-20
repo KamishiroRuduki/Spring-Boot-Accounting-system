@@ -23,6 +23,10 @@ public class CategoryService {
 		return CategoryRepository.findAll();
 	}
 	
+	public List<Category> getCategoryByUserID(String userid){
+		return CategoryRepository.FindCategoryByUserID(userid);
+	}
+	
 	public List<CategoryInterFace> getCategoryModelByUserid(String userid){
 		return CategoryRepository.FindCategoryModelListByUserid(userid);
 	}

@@ -45,6 +45,11 @@ public interface CategoryRepository extends JpaRepository<Category,String>{
 			+ "  WHERE userid =:userid AND caption =:caption", nativeQuery = true)
 	int FindCategoryCaptionByCaptionAndUserID(@Param("userid") String userid, @Param("caption") String caption);
 	
+	@Query(value = "  SELECT *"
+			+ "  FROM  category"
+			+ "  WHERE userid =:userid", nativeQuery = true)
+	List<Category> FindCategoryByUserID(@Param("userid") String userid);
+	
 	
 
 	

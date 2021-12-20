@@ -50,7 +50,6 @@ public class CategoryListController {
 		}
 		
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");
-		System.out.println(User.getId());
 		// 用從UDL取得的ID去DB撈資料，並放進自定義的分類Model
 		List<CategoryInterFace> CategoryModelList = CategoryService.getCategoryModelByUserid(User.getId());
 		//List<CategoryInterFace> CategoryModelList = CategoryRepository.FindCategoryModelListByUserid(userid);
@@ -84,9 +83,7 @@ public class CategoryListController {
 			redirAttrs.addFlashAttribute("message", "刪除成功");
 		}
 		else
-		{
 			redirAttrs.addFlashAttribute("message", "並未勾選");
-		}
 
 		
 		String url = "/SystemAdmin/CategoryList";
