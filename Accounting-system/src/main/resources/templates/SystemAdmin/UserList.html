@@ -5,6 +5,11 @@
       layout:decorate="~{layout/layout2.html}">
 <head>
   <title>User List</title>
+   <script>
+ $(function () { 
+	 $("#tbUserInfo").tablepage($("#table_page"), 10); //TABLE換頁功能，""("#table_page"),"後面的數字是每一頁的筆數
+ });
+ </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -15,34 +20,64 @@
   </svg>
   會員管理
 <div id = userAll>
-      <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" /> &nbsp;&nbsp;
-      <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />&emsp; &nbsp;&ensp;<br/>
-      <table cellspacing="0" cellpadding="4"
-       id="ContentPlaceHolder1_gvAccountingList"
-       style="color: #333333; border-collapse: collapse;">
-       <tr
-        style="color: White; background-color: #507CD1; font-weight: bold;">
-        <th scope="col"></th>
-        <th scope="col">帳號</th>
-        <th scope="col">姓名</th>
-        <th scope="col">Email</th>
-        <th scope="col">等級</th>
-        <th scope="col">建立日期</th>
-        <th scope="col">Act</th>
-       </tr>
-       <tr style="background-color: #EFF3FB;">
-       <td><input type="checkbox" id="chbcheck" name="chbcheck"></td>
-        <td>[[${account}]]</td>
-        <td>[[${name}]]</td>
-        <td>[[${email}]]</td>
-        <td>[[${level}]]</td>
-        <td>[[${createdate}]]</td>
-        <td><a
-         href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">Edit</a>
-        </td>
-       </tr>
+<form method="post" action="#" th:action="@{/SystemAdmin/UserList}" id="form1">
+      <a th:href="@{/SystemAdmin/UserDetail}">
+	  <input type="button"  class="btn btn-outline-dark" name="btnCategoryAdd" value="Add" id="btnCategoryAdd" /></a> &nbsp;&nbsp;
+             <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
+             onclick="return confirm('您確定要刪除已選取項目嗎?')"/>
+             <br /><br />
+<!--       <table cellspacing="0" cellpadding="4" -->
+<!--        id="ContentPlaceHolder1_gvAccountingList" -->
+<!--        style="color: #333333; border-collapse: collapse;"> -->
+<!--        <tr -->
+<!--         style="color: White; background-color: #507CD1; font-weight: bold;"> -->
+<!--         <th scope="col"></th> -->
+<!--         <th scope="col">帳號</th> -->
+<!--         <th scope="col">姓名</th> -->
+<!--         <th scope="col">Email</th> -->
+<!--         <th scope="col">等級</th> -->
+<!--         <th scope="col">建立日期</th> -->
+<!--         <th scope="col">Act</th> -->
+<!--        </tr> -->
+<!--        <tr style="background-color: #EFF3FB;"> -->
+<!--        <td><input type="checkbox" id="chbcheck" name="chbcheck"></td> -->
+<!--         <td>[[${account}]]</td> -->
+<!--         <td>[[${name}]]</td> -->
+<!--         <td>[[${email}]]</td> -->
+<!--         <td>[[${level}]]</td> -->
+<!--         <td>[[${createdate}]]</td> -->
+<!--         <td><a -->
+<!--          href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">Edit</a> -->
+<!--         </td> -->
+<!--        </tr> -->
        
-      </table>
+<!--       </table> -->
+<table class="myTable" border="1" cellpadding="6" id="tbUserInfo"
+                style="color: #333333; border-collapse: collapse;">
+                <tr style="color: White; background-color: #507CD1; font-weight: bold;">
+                    <th scope="col"></th>
+                    <th scope="col">帳號</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">等級</th>
+                    <th scope="col">建立時間</th>
+                    <th scope="col">Act</th>
+                </tr>
+                <tr th:each="UserInfoInterface:${userInfoListTable}">
+                    <td style="border-right:1px solid black;">
+                        <input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${UserInfoInterface.getid()}>
+                    </td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getaccount()}">Account</td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getname()}">Name</td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getemail()}">Email</td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getuser_level()} == 0 ? '管理員' : '一般會員'">UserLevel</td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getcreate_date()}">CreateDate</td>
+                    <td><a th:href="@{/UserDetail(userID=${UserInfoInterface.getid()})}">Edit</a></td>
+                </tr>
+            </table>
+            <br /><br />
+            <span id="table_page"></span>
+            </form>
 </div>
 </div>
 </body>

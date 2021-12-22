@@ -40,6 +40,13 @@ public class UserInfo2 {
 	  public void setId(String ID) {
 		this.ID = ID;
 	  }
+	  
+	  public String getAccount() {
+		return Account;
+	  }
+	  public void setAccount(String Account) {
+		this.Account = Account;
+	  }
 	  public String getEmail() {
 		return Email;
 	  }

@@ -9,6 +9,7 @@
 <body>
 <div layout:fragment="content">
    <h2>目前頁面</h2>
+   <form method="post" action="" id="form1">
    <table>
     <tr>
      <td>
@@ -35,7 +36,7 @@
 		 姓名
 		 </td>
 		 <td style="border: 1px solid black;">
-		 <input type="text" name="txtName" id="txtName" th:value="${name}" />
+		 <input type="text" name="txtName" id="txtName" maxlength="20" th:value="${name}" />
 		 </td>
 		 </tr>
 		 <tr>
@@ -43,7 +44,7 @@
 		 Email
 		 </td>
 		 <td style="border: 1px solid black;">
-		 <input type="email" name="txtEmail" id="txtEmail" th:value="${email}" />
+		 <input type="email" name="txtEmail" id="txtEmail" maxlength="100" th:value="${email}" />
 		 </td>
 		 </tr>
 		 </table>
@@ -58,6 +59,7 @@
 
      
    </table>
+   </form>
 </div>
 </body>
 </html>

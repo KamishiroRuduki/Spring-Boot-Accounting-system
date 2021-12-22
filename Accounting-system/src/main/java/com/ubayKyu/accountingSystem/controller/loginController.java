@@ -26,46 +26,23 @@ public class loginController {
 	HttpSession session;
     @Autowired
     private UserInfoRepository2 UserInfoRepository2;
+	@Autowired  //與service層進行互動
+	private LoginService LoginService;
 	
 	@GetMapping("/login")
 	public String getLogin(Model model) {
-		//, @ModelAttribute("message") String message
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)
 		{
-		/*	if(message != null)
-			model.addAttribute("test", message);*/
 			return "login.html";
 		}
 		else {
-            String url = "/SystemAdmin/AccountingList";
+            String url = "/SystemAdmin/UserProfile";
             return "redirect:" + url;
 		}
 	}
 	
-	@Autowired  //與service層進行互動
-	private LoginService LoginService;
 	
-	
-/*	@RequestMapping("/login")
-	public String getLoginCl(@RequestParam("txtAccount") String name,@RequestParam("txtPWD") String password){
-		
-		boolean b;
-		b=LoginService.Find(name, password);//呼叫service層的方法
-		
-		
-		if(b){
-			session.setAttribute("Name", name);
-			session.setAttribute("Password", password);
-			String url ="/SystemAdmin/AccountList";
-            return "redirect:" + url; // 重新導向到指定的url
-		}
-		else {	
-		String url ="/default";
-        return "redirect:" + url; // 重新導向到指定的url
-			
-		}
-}*/
 	
 	//@RequestMapping("/login")
     // 登入(帳號、密碼)
@@ -87,13 +64,11 @@ public class loginController {
 
         if (result == true) {// 如果成功
         	redirAttrs.addFlashAttribute("message", "登入成功");
-        	//model.addAttribute("message", "登入成功");
-            String url = "/SystemAdmin/AccountingList"; // 重新導向到指定的url
+            String url = "/SystemAdmin/UserProfile"; // 重新導向到指定的url
             return "redirect:" + url; // 重新導向到指定的url
         } else {// 如果失敗
         	
         	redirAttrs.addFlashAttribute("message", "バカなの、死ぬの?");
-			//model.addAttribute("message", "バカなの、死ぬの?");
             String url = "/default";
             return "redirect:/login"; // 重新導向到指定的url
         }
