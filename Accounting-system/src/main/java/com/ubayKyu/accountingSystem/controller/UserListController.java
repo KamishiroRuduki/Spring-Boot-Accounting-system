@@ -91,7 +91,12 @@ public class UserListController {
                 }
                 else 
                 {
-                    messageLog +="管理者 " + currentAccount + " 於 " + LocalDate.now() + " 刪除使用者 " + account+"/n";                  
+                    try {
+        				LoggerService.WriteLoggerFile("管理者 " + currentAccount + " 於 " + LocalDate.now() + " 刪除使用者 " + account);
+        			} catch (IOException e) {
+        				// TODO 自動生成された catch ブロック
+        				e.printStackTrace();
+        			}              
                     UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(eachUserID);
                 }
                
@@ -99,20 +104,20 @@ public class UserListController {
             
             if( delThisUser != null)
             {
-            	messageLog +="管理者 " + delThisUser + " 於 " + LocalDate.now() + " 刪除使用者 " + currentAccount+"/n";
+                //將刪除訊息寫進LOG
+                try {
+    				LoggerService.WriteLoggerFile("管理者 " + currentAccount + " 於 " + LocalDate.now() + " 刪除使用者 " + currentAccount);
+    			} catch (IOException e) {
+    				// TODO 自動生成された catch ブロック
+    				e.printStackTrace();
+    			}
             	UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(delThisUser);
                 redirectAttrs.addFlashAttribute("message","本會員已刪除，回到預設頁");
                 LoginService.LoginSessionRemove(session);
                 return "redirect:/default";
             }
             
-            //將刪除訊息寫進LOG
-            try {
-				LoggerService.WriteLoggerFile(messageLog);
-			} catch (IOException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+
 
             redirectAttrs.addFlashAttribute("message","已將選取之會員及其流水帳、分類刪除");
         }else

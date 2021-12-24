@@ -13,4 +13,6 @@ public interface UserInfoInterface {
     String getname();
 
     Integer getuser_level();
+    
+    String getedit_date();
 }

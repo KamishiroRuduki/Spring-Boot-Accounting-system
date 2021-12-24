@@ -88,9 +88,9 @@ public class AccountDetailController {
 			return "redirect:" + url;
 		}
 		Integer amount = Integer.parseInt(txtAmount);
-        if( amount > 10000000 )
+        if( amount > 10000000 || amount < 0)
         {
-            redirAttrs.addFlashAttribute("message", "輸入金額不能超過1000萬");
+            redirAttrs.addFlashAttribute("message", "輸入金額不能超過1000萬或為負數");
             if(accID != null)
                 return "redirect:/SystemAdmin/AccountingDetail?accID=" + accID;
             else 

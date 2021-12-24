@@ -2,6 +2,7 @@ package com.ubayKyu.accountingSystem.controller;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -87,7 +88,7 @@ public class CategoryDetailController {
 			return "redirect:" + url;
 		}
 		
-
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime date = LocalDateTime.now();
 		String message = "編輯成功";
 		if(categoryid == null)

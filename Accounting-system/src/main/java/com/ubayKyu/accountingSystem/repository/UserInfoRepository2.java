@@ -2,6 +2,7 @@ package com.ubayKyu.accountingSystem.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,6 +23,7 @@ public interface UserInfoRepository2 extends JpaRepository<UserInfo2,String>{
             + "      ,[name]"
             + "      ,[pwd]"
             + "      ,[user_level]"
+            + "      ,[edit_date]"
             + "  FROM [user_info]"
             +"  WHERE [account] =:account AND [pwd]=:pwd"
             , nativeQuery = true)
@@ -34,10 +36,29 @@ public interface UserInfoRepository2 extends JpaRepository<UserInfo2,String>{
                  + "        ,[email]"
                  + "        ,[name]"
                  + "        ,[user_level]"
+                 + "        ,FORMAT([edit_date], '	') AS [edit_date]"
                  + "    FROM [user_info]"
                  + "    ORDER BY [create_date] DESC"
                  , nativeQuery = true)
      List<UserInfoInterface> GetUserInfoInterface();
+    
+    @Query(value = "SELECT [id]"
+            + "     ,[account]"
+             + "        ,FORMAT([create_date], 'yyyy/MM/dd hh:mm:ss') AS [create_date]"
+             + "        ,[email]"
+             + "        ,[name]"
+             + "        ,[user_level]"
+             + "        ,FORMAT([edit_date], 'yyyy/MM/dd hh:mm:ss') AS [edit_date]"
+             + "    FROM [user_info]"
+             + "    WHERE [user_info].[id] =:userid"
+             , nativeQuery = true)
+    Optional<UserInfoInterface> FindUserInfoInterfaceByID(@Param("userid") String userid);
+    
+    //檢查帳號重複
+	@Query(value = "  SELECT COUNT(*)"
+			+ "  FROM  user_info"
+			+ "  WHERE account =:account", nativeQuery = true)
+	int FindUserAccountByAccount(@Param("account") String account);
     
     @Modifying
     @Query(value = "DELETE FROM [user_info]"

@@ -5,6 +5,34 @@
       layout:decorate="~{layout/layout2.html}">
 <head>
   <title>User List</title>
+<script th:inline="javascript">
+function getArgs(strParame) { //抓Request.QueryString用
+    var args = new Object();
+    var query = location.search.substring(1); // Get query string
+    var pairs = query.split("&"); // Break at ampersand
+    for (var i = 0; i < pairs.length; i++) {
+        var pos = pairs[i].indexOf('='); // Look for "name=value"
+        if (pos == -1) continue; // If not found, skip
+        var argname = pairs[i].substring(0, pos); // Extract the name
+        var value = pairs[i].substring(pos + 1, pairs[i].length); // Extract the value
+        value = decodeURIComponent(value); // Decode it, if needed
+        args[argname] = value; // Store as a property
+    }
+    return args[strParame]; // Return the object
+}
+ $(function () { 
+	 var userLevel = /*[[${UserLevel}]]*/ ""; 
+	 var userID = getArgs("userID");
+	 if(userID == null)
+		 $(".EditAccount").hide();
+	 else
+		 $("#AddAccount").hide(); 
+	 if( userLevel != null){ 
+ 		 $("#ddlUserLevel").val(userLevel); 
+	 } 
+ });
+ </script>
+  
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,22 +42,28 @@
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
   </svg>
   會員管理
-
+   <form method="post" action=""  id="form1">
 <div id = userOne>
-<table>
-<tr><td>帳號</td><td>[[${Account}]]</td></tr>
-<tr><td>姓名</td><td> <input type="text" name="txtName" id="txtName" th:value="${name}" /></td></tr>
-<tr><td>Email</td><td><input type="email" name="txtEmail" id="txtEmail" th:value="${email}" /></td></tr>
-<tr><td>等級</td><td><select name="AccountType" id="AccountType">
-						<option value="user">一般會員</option>
-						<option value="manger">管理者</option>
-				</select></td></tr>
-</table>
+<div class="EditAccount">帳號 &nbsp;&nbsp;[[${Account}]]</div>
+<div id="AddAccount">帳號 &nbsp;&nbsp;<input type="text" name="txtAccount" id="txtAccount" th:value="${Account}" required placeholder="請輸入帳號" /></div>
+<br/>
+姓名&nbsp;&nbsp;&nbsp;<input type="text" name="txtName" id="txtName" th:value="${Name}" maxlength="20" required placeholder="請輸入姓名" /><br/><br/>
+Email&nbsp;&nbsp;<input type="email" name="txtEmail" id="txtEmail" th:value="${Email}" required placeholder="請輸入Email" /><br/><br/>
+等級&nbsp;&nbsp;<select name="ddlUserLevel" id="ddlUserLevel">
+						<option value="0">一般會員</option>
+						<option value="1">管理者</option>
+				</select>
+<br/><br/>
+<div class="EditAccount">
 建立時間 &emsp; [[${CreatTime}]]<hr>
-修改時間 &emsp; [[${UpateTime}]]<hr>
-      <input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" /> &nbsp;&nbsp;
-      <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Delete" id="btnDel" />&emsp; &nbsp;&ensp;<br/>
+<input type="hidden" name="hiddenCreateDate" id="hiddenCreateDate" th:value="${CreateTime}" />
+修改時間 &emsp; [[${EditTime}]]<hr>
 </div>
+      <input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" /> &nbsp;&nbsp;
+                  <a th:href="@{/SystemAdmin/UserList}">
+				<input type="button"  class="btn btn-outline-dark" name="btnCancel" value="Cancel" id="btnCancel" /></a>
+</div>
+</form>
 </div>
 </body>
 </html>

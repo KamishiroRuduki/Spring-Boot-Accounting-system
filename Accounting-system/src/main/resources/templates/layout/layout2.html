@@ -24,7 +24,7 @@
  
  $(function () { 
  // document.getElementById('image').src = "https://icons.getbootstrap.com/assets/icons/person.svg";
-    var level = "[[${session.UserLevel}]]";
+    var level = "[[${session.LoginState.getUserLevel()}]]";
     if(level == 0){
       $("#image").attr('src',"https://icons.getbootstrap.com/assets/icons/person.svg"); 
       $("#divManagerBc").hide(); 

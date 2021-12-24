@@ -70,9 +70,9 @@
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getaccount()}">Account</td>
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getname()}">Name</td>
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getemail()}">Email</td>
-                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getuser_level()} == 0 ? '管理員' : '一般會員'">UserLevel</td>
+                    <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getuser_level()} >= 1 ? '管理員' : '一般會員'">UserLevel</td>
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getcreate_date()}">CreateDate</td>
-                    <td><a th:href="@{/UserDetail(userID=${UserInfoInterface.getid()})}">Edit</a></td>
+                    <td><a th:href="@{/SystemAdmin/UserDetail(userID=${UserInfoInterface.getid()})}">Edit</a></td>
                 </tr>
             </table>
             <br /><br />
