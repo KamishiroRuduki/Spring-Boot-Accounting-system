@@ -23,15 +23,18 @@ public class UserInfoService {
 		return repository.findAll();
 	}
 	
+	
     public Optional<UserInfo2> findByUserID(String userID) {
         return repository.findById(userID);
     }
 
+    //用userid找單筆自定義user model資料
     public Optional<UserInfoInterface> GetUserInfoInterfaceByUserID(String userID) {
         return repository.FindUserInfoInterfaceByID(userID);
     }
     
-    public void SaveUserInfo(UserInfo2 userInfo,String userID, String txtAccount, String txtName, String txtEmail,Integer ddlUserLevel ) {//新增、編輯使用者
+  //新增、編輯使用者
+    public void SaveUserInfo(UserInfo2 userInfo,String userID, String txtAccount, String txtName, String txtEmail,Integer ddlUserLevel ) {
     	userInfo.setId(userID);
     	userInfo.setPWD("12345678");
 		userInfo.setAccount(txtAccount);
@@ -52,11 +55,9 @@ public class UserInfoService {
 		return repository.findAllById(ids);
 	}
 	
-	public String deleteUserInfo(String id) {
-		repository.deleteById(id);
-		return "Deleted!";
-	}
 	
+	//刪除、修改沒有回傳值得場合要加@Transactional
+	//刪除使用者，同時刪除該使用者的流水帳跟分類
 	@Transactional
     public void deleteUserInfoAccountingNoteAndCategoryByUserID(String userID) {
         repository.DeleteUserInfoAccountingNoteAndCategoryByUserID(userID);

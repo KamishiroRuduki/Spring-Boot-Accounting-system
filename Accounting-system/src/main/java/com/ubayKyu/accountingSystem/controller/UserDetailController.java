@@ -38,19 +38,19 @@ public class UserDetailController {
 	@GetMapping("/SystemAdmin/UserDetail")
 	public String UserDetail(@RequestParam(value = "userID", required = false) String userID, RedirectAttributes redirectAttrs,Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//檢查是否有登入
 		{
             String url = "/default";
             LoginService.LoginSessionRemove(session);
             return "redirect:" + url;
 		}
 		UserInfo2 user =  (UserInfo2) session.getAttribute("LoginState");
-		if(user.getUserLevel() < 1 )
+		if(user.getUserLevel() < 1 )//檢查權限
 		{
 			redirectAttrs.addFlashAttribute("message", "你的權限不足，無法訪問該頁面");
 			return "redirect:/SystemAdmin/UserProfile";
 		}
-		if( userID != null)
+		if( userID != null)//編輯模式下把該使用者的資訊做回填
 		{
 			Optional<UserInfoInterface> userInfo=  UserInfoService.GetUserInfoInterfaceByUserID(userID);
 			model.addAttribute("Account", userInfo.get().getaccount());
@@ -75,7 +75,7 @@ public class UserDetailController {
 
 		 */
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//檢查是否有登入
 		{
 			String url = "/default";
 			LoginService.LoginSessionRemove(session);
@@ -83,18 +83,19 @@ public class UserDetailController {
 		}
 
 
+		//前台資料驗證
 		String message = "";
-		if(txtAccount == null)
-			message += "帳號不能為空";
-		if(userID == null && !UserInfoService.IsNotAccountCreated(txtAccount))//檢查標題重複
-			message += "此帳號已被使用";					
-		if(txtName == null || txtName.length() > 20)
-			message += "姓名不能為空或超過20個字";
-		if(txtEmail == null)
-			message += "Email不能為空";
+		if(txtAccount == null || txtAccount.isEmpty())
+			message += "帳號不能為空\n";
+		if(userID == null && !UserInfoService.IsNotAccountCreated(txtAccount))//檢查帳號重複
+			message += "此帳號已被使用\n";					
+		if(txtName == null || txtName.isEmpty() || txtName.length() > 20)
+			message += "姓名不能為空或超過20個字\n";
+		if(txtEmail == null || txtEmail.isEmpty())
+			message += "Email不能為空\n";
 		
 		
-		if(!message.isEmpty())
+		if(!message.isEmpty())//檢查錯誤訊息是否為空，不為空return並跳出錯誤訊息
 		{
 			redirAttrs.addFlashAttribute("message", message);
 			//判斷是新增還是編輯，決定回傳地址
@@ -105,9 +106,10 @@ public class UserDetailController {
 		}
 
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");//定義LocalDateTime格式，不定義的話有些日期字串轉換會失敗
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");	
-		UserInfo2 UserInfo = new UserInfo2();
+		UserInfo2 UserInfo = new UserInfo2();//新增、編輯用的UserInfo
+		//新增跟編輯不同的部分在controller先set，共同的部分到service再set
 		if(userID != null) {
 			UserInfo.setCreateDate(LocalDateTime.parse(CreateDate, formatter)) ;
 			UserInfo.setEditDate(LocalDateTime.now());
@@ -119,12 +121,13 @@ public class UserDetailController {
 			message = "新增成功";
 		}
 		
-		if(User.getId().equals(userID) )
+		UserInfoService.SaveUserInfo(UserInfo,userID,txtAccount,txtName,txtEmail,ddlUserLevel);	   		
+		if(User.getId().equals(userID) )//編輯自己的資料後，更新session
 		{
 			UserInfo2 NewSessionUserInfo = UserInfoService.findByUserID(userID).get();
 			session.setAttribute("LoginState", NewSessionUserInfo);
 		}
-		UserInfoService.SaveUserInfo(UserInfo,userID,txtAccount,txtName,txtEmail,ddlUserLevel);	   
+
 		redirAttrs.addFlashAttribute("message", message);
 		return "redirect:/SystemAdmin/UserDetail?userID=" + userID;
 		

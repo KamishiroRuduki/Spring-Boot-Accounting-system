@@ -50,7 +50,7 @@ public class UserListController {
             return "redirect:" + url;
 		}
 		UserInfo2 user =  (UserInfo2) session.getAttribute("LoginState");
-		if(user.getUserLevel() < 1 )
+		if(user.getUserLevel() < 1 )//檢查使用者權限
 		{
 			redirectAttrs.addFlashAttribute("message", "你的權限不足，無法訪問該頁面");
 			return "redirect:/SystemAdmin/UserProfile";
@@ -92,17 +92,17 @@ public class UserListController {
                 else 
                 {
                     try {
-        				LoggerService.WriteLoggerFile("管理者 " + currentAccount + " 於 " + LocalDate.now() + " 刪除使用者 " + account);
+        				LoggerService.WriteLoggerFile("管理者 " + currentAccount + " 於 " + LocalDate.now() + " 刪除使用者 " + account);//將刪除訊息寫進LOG
         			} catch (IOException e) {
         				// TODO 自動生成された catch ブロック
         				e.printStackTrace();
         			}              
-                    UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(eachUserID);
+                    UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(eachUserID);//刪除使用者
                 }
                
             }
             
-            if( delThisUser != null)
+            if( delThisUser != null)//刪除自己的會員資料
             {
                 //將刪除訊息寫進LOG
                 try {
@@ -111,7 +111,7 @@ public class UserListController {
     				// TODO 自動生成された catch ブロック
     				e.printStackTrace();
     			}
-            	UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(delThisUser);
+            	UserInfoService.deleteUserInfoAccountingNoteAndCategoryByUserID(delThisUser);//刪除使用者
                 redirectAttrs.addFlashAttribute("message","本會員已刪除，回到預設頁");
                 LoginService.LoginSessionRemove(session);
                 return "redirect:/default";

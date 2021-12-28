@@ -72,7 +72,6 @@ public class CategoryService {
 	}
 	
 	public boolean IsNotCategoryCaptionCreated(String userid, String caption, String categoryid) {
-		//int captionDB = CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption);
 		if (categoryid != null) // 編輯模式
 		{
 			Optional<Category> category = CategoryRepository.findById(categoryid);
@@ -101,18 +100,6 @@ public class CategoryService {
         CategoryRepository.save(category);
     }
     
-	//test
-//	public UserInfo2 saveUserInfo(UserInfo2 UserInfo) {
-//		return repository.save(UserInfo);
-//	}
-//	
-//	public List<UserInfo2> getUserInfoById(List<String> ids){
-//		return repository.findAllById(ids);
-//	}
-//	
-//	public String deleteUserInfo(String id) {
-//		repository.deleteById(id);
-//		return "Deleted!";
-//	}
+
 }
 

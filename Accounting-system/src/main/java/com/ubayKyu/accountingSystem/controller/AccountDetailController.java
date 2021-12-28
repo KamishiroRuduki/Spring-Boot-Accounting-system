@@ -87,19 +87,30 @@ public class AccountDetailController {
 			LoginService.LoginSessionRemove(session);
 			return "redirect:" + url;
 		}
+		//-------------------------驗證輸入資料，不正確的話直接return並跳出錯誤訊息-------------------------------
 		Integer amount = Integer.parseInt(txtAmount);
+		String message = "";
+        if(amount == null)
+            message += "金額不可為空\n";
+
+        if(txtCaption.isEmpty() || txtCaption == null)
+            message += "標題不可為空\n";
+        
         if( amount > 10000000 || amount < 0)
+        	message += "輸入金額不能超過1000萬或為負數\n";
+        
+        if(!message.isEmpty())
         {
-            redirAttrs.addFlashAttribute("message", "輸入金額不能超過1000萬或為負數");
+            redirAttrs.addFlashAttribute("message", message);
             if(accID != null)
                 return "redirect:/SystemAdmin/AccountingDetail?accID=" + accID;
             else 
                 return "redirect:/SystemAdmin/AccountingDetail";
         }
-
+		//-------------------------驗證輸入資料，不正確的話直接return並跳出錯誤訊息-------------------------------
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");	
 		Integer accountingid = FormatService.parseIntOrNull(accID); //檢查accID是否為數字，不是的話取得NULL
-		AccountingNote accountingNote = new AccountingNote();
+		AccountingNote accountingNote = new AccountingNote();//新增一個流水帳，並且放入資料
 		if(!categoryid.isEmpty()) //如果不是未分類，才把值帶入
 			accountingNote.setCategoryID(categoryid);
 		accountingNote.setActType(actType);
@@ -107,8 +118,9 @@ public class AccountDetailController {
 		accountingNote.setCaption(txtCaption);
 		accountingNote.setBody(txtBody);		
 		accountingNote.setUserID(User.getId());
-		String message = "編輯成功";
-		if(accountingid == null)
+		
+	    message = "編輯成功";
+		if(accountingid == null)//判斷是新增還是編輯
 		{
 			accountingNote.setCreateDate(LocalDateTime.now());
 			message = "新增成功";			

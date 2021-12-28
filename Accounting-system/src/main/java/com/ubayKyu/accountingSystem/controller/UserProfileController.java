@@ -61,14 +61,15 @@ public class UserProfileController {
             LoginService.LoginSessionRemove(session);
             return "redirect:" + url;
 		}
-		else if( txtName.length() > 20) //檢查名字長度
+		//驗證傳進來的資料
+		else if( txtName == null || txtName.isEmpty() || txtName.length() > 20) //檢查名字長度
 		{
-			redirectAttrs.addFlashAttribute("message", "名字長度不能超過20文字");
+			redirectAttrs.addFlashAttribute("message", "名字不能為空、名字長度不能超過20文字");
 			return "redirect:/SystemAdmin/UserProfile";
 		}
-		else if( txtEmail.length() > 100) //檢查email長度
+		else if( txtEmail == null || txtEmail.isEmpty() ||txtEmail.length() > 100) //檢查email長度
 		{
-			redirectAttrs.addFlashAttribute("message", "Email長度不能超過100文字");
+			redirectAttrs.addFlashAttribute("message", "Email不能為空、Email長度不能超過100文字");
 			return "redirect:/SystemAdmin/UserProfile";
 		}
 

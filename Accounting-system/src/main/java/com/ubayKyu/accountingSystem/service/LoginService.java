@@ -28,16 +28,8 @@ public static void LoginSessionRemove(HttpSession session) {
 
 	 }
 
-public static boolean LoginSessionCheck(HttpSession session) {
+public static boolean LoginSessionCheck(HttpSession session) {//登入驗證
 	Object wkLoginID= session.getAttribute("LoginState");
-//	for( int i = 0; i < 5; i++) {
-//    try {
-//		LoggerService.WriteLoggerFile("test"+i);
-//	} catch (Exception e) {
-//		// TODO 自動生成された catch ブロック
-//		e.printStackTrace();
-//	}
-//	}
 	if( wkLoginID != null)
 		return true;
 	else

@@ -11,7 +11,7 @@ public class FormatService {
     return answer;
     }
     
-    public static Integer parseIntOrNull(String value) {
+    public static Integer parseIntOrNull(String value) {//檢查字串是否為數字並回傳，不是的話回傳NULL
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {

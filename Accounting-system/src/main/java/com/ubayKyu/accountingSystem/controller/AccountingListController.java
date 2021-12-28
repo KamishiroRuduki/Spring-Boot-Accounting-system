@@ -43,8 +43,11 @@ public class AccountingListController {
             return "redirect:" + url;
 		}
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");
+		//傳至前台用的流水帳列表自訂MODEL
         List<AccountingNoteInterFace> AccountingNoteList = AccountingNoteService.getAccountingNoteInterfaceListByUserID(User.getId());
+        //小計
         Integer AmountSum = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,false) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0,false));
+        //當月小計
         Integer AmountSumOfMonth = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,true) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0, true));
         model.addAttribute("AccountingNoteList", AccountingNoteList);
 		model.addAttribute("subtotal", AmountSum);
@@ -68,7 +71,7 @@ public class AccountingListController {
 		
 		if (AccountNoteDel != null ) {//假如checkbox有被勾選
 			for (int AccountNoteid : AccountNoteDel) {
-				AccountingNoteService.deleteAccountingNoteByAccountingNoteID(AccountNoteid);
+				AccountingNoteService.deleteAccountingNoteByAccountingNoteID(AccountNoteid);//刪除流水帳
 				}
 			redirAttrs.addFlashAttribute("message", "刪除成功");
 		}
