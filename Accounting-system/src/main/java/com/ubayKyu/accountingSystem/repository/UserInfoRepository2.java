@@ -60,6 +60,8 @@ public interface UserInfoRepository2 extends JpaRepository<UserInfo2,String>{
 			+ "  WHERE account =:account", nativeQuery = true)
 	int FindUserAccountByAccount(@Param("account") String account);
     
+	//刪除、修改沒有回傳值得場合要加@Modifying
+	//刪除使用者，同時刪除該使用者的流水帳跟分類
     @Modifying
     @Query(value = "DELETE FROM [user_info]"
             + "    WHERE [user_info].[id] =:userid"
@@ -69,6 +71,15 @@ public interface UserInfoRepository2 extends JpaRepository<UserInfo2,String>{
             + "    WHERE [category].[userid] =:userid"
             , nativeQuery = true)
      void DeleteUserInfoAccountingNoteAndCategoryByUserID(@Param("userid") String userid);
+    
+    //找出現在的管理員數
+	@Query(value = "  SELECT COUNT(*)"
+			+ "  FROM  user_info"
+			+ "  WHERE user_level > '0'", nativeQuery = true)
+	int FindAdminUserCount();
+    
+	
+    
 }
 
 

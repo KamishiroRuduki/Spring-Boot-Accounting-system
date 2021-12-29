@@ -73,4 +73,15 @@ public class UserInfoService {
         userInfoForEdit.get().setEmail(txtEmail); // 更新Email
         repository.save(userInfoForEdit.get()); // 內建儲存語法
     }
+    
+    //檢查此使用者是否為管理員且管理員人數是否<=1人
+    public boolean IsAdminUserLevelChange(String userID)
+    {
+    	Optional<UserInfo2> user = repository.findById(userID);
+    	if(user.get().getUserLevel() > 0 && repository.FindAdminUserCount() <= 1)
+    		return false;
+    	else 
+    		return true;    	
+    	
+    }
 }

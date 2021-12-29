@@ -89,11 +89,12 @@ public class UserDetailController {
 			message += "帳號不能為空\n";
 		if(userID == null && !UserInfoService.IsNotAccountCreated(txtAccount))//檢查帳號重複
 			message += "此帳號已被使用\n";					
-		if(txtName == null || txtName.isEmpty() || txtName.length() > 20)
+		if(txtName == null || txtName.isEmpty() || txtName.length() > 20)//檢查姓名長度跟是否為空
 			message += "姓名不能為空或超過20個字\n";
-		if(txtEmail == null || txtEmail.isEmpty())
+		if(txtEmail == null || txtEmail.isEmpty())//檢查Email長度跟是否為空
 			message += "Email不能為空\n";
-		
+		if(userID != null && ddlUserLevel == 0 && !UserInfoService.IsAdminUserLevelChange(userID))//當將管理員變更權限為一般會員時檢查管理員人數不能<=1
+			message += "管理員數不能為0人\n";
 		
 		if(!message.isEmpty())//檢查錯誤訊息是否為空，不為空return並跳出錯誤訊息
 		{

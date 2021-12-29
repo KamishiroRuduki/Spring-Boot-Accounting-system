@@ -26,32 +26,7 @@
              <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
              onclick="return confirm('您確定要刪除已選取項目嗎?')"/>
              <br /><br />
-<!--       <table cellspacing="0" cellpadding="4" -->
-<!--        id="ContentPlaceHolder1_gvAccountingList" -->
-<!--        style="color: #333333; border-collapse: collapse;"> -->
-<!--        <tr -->
-<!--         style="color: White; background-color: #507CD1; font-weight: bold;"> -->
-<!--         <th scope="col"></th> -->
-<!--         <th scope="col">帳號</th> -->
-<!--         <th scope="col">姓名</th> -->
-<!--         <th scope="col">Email</th> -->
-<!--         <th scope="col">等級</th> -->
-<!--         <th scope="col">建立日期</th> -->
-<!--         <th scope="col">Act</th> -->
-<!--        </tr> -->
-<!--        <tr style="background-color: #EFF3FB;"> -->
-<!--        <td><input type="checkbox" id="chbcheck" name="chbcheck"></td> -->
-<!--         <td>[[${account}]]</td> -->
-<!--         <td>[[${name}]]</td> -->
-<!--         <td>[[${email}]]</td> -->
-<!--         <td>[[${level}]]</td> -->
-<!--         <td>[[${createdate}]]</td> -->
-<!--         <td><a -->
-<!--          href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">Edit</a> -->
-<!--         </td> -->
-<!--        </tr> -->
-       
-<!--       </table> -->
+
 <table class="myTable" border="1" cellpadding="6" id="tbUserInfo"
                 style="color: #333333; border-collapse: collapse;">
                 <tr style="color: White; background-color: #507CD1; font-weight: bold;">
@@ -65,7 +40,8 @@
                 </tr>
                 <tr th:each="UserInfoInterface:${userInfoListTable}">
                     <td style="border-right:1px solid black;">
-                        <input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${UserInfoInterface.getid()}>
+                        <input type="checkbox" id="ckbDelete" name="ckbDelete" 
+                         th:styleappend="${UserInfoInterface.getid()} == ${session.LoginState.getId()} ? 'display: none;' : ''" th:value=${UserInfoInterface.getid()}>
                     </td>
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getaccount()}">Account</td>
                     <td style="border-right:1px solid black;" th:text="${UserInfoInterface.getname()}">Name</td>
