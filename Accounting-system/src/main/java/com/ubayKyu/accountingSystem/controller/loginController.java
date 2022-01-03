@@ -68,7 +68,7 @@ public class loginController {
             return "redirect:" + url; // 重新導向到指定的url
         } else {// 如果失敗
         	
-        	redirAttrs.addFlashAttribute("message", "バカなの、死ぬの?");
+        	redirAttrs.addFlashAttribute("message", "登入失敗，請檢查帳號或密碼是否正確");
             String url = "/default";
             return "redirect:/login"; // 重新導向到指定的url
         }
