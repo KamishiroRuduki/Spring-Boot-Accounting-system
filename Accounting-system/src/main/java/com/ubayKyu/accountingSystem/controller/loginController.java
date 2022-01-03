@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ubayKyu.accountingSystem.dto.User;
-import com.ubayKyu.accountingSystem.entity.UserInfo;
 import com.ubayKyu.accountingSystem.entity.UserInfo2;
 import com.ubayKyu.accountingSystem.repository.UserInfoRepository2;
 import com.ubayKyu.accountingSystem.service.LoginService;
