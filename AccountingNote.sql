@@ -1,99 +1,6 @@
-USE [master]
-GO
-/****** Object:  Database [AccountingNote]    Script Date: 2022/01/04 21:54:58 ******/
-CREATE DATABASE [AccountingNote]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'AccountingDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\AccountingDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'AccountingDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\AccountingDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
-ALTER DATABASE [AccountingNote] SET COMPATIBILITY_LEVEL = 150
-GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [AccountingNote].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [AccountingNote] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [AccountingNote] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [AccountingNote] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [AccountingNote] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [AccountingNote] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [AccountingNote] SET AUTO_CLOSE OFF 
-GO
-ALTER DATABASE [AccountingNote] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [AccountingNote] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [AccountingNote] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [AccountingNote] SET CURSOR_DEFAULT  GLOBAL 
-GO
-ALTER DATABASE [AccountingNote] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [AccountingNote] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [AccountingNote] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [AccountingNote] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [AccountingNote] SET  DISABLE_BROKER 
-GO
-ALTER DATABASE [AccountingNote] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [AccountingNote] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-ALTER DATABASE [AccountingNote] SET TRUSTWORTHY OFF 
-GO
-ALTER DATABASE [AccountingNote] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-ALTER DATABASE [AccountingNote] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [AccountingNote] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [AccountingNote] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [AccountingNote] SET RECOVERY FULL 
-GO
-ALTER DATABASE [AccountingNote] SET  MULTI_USER 
-GO
-ALTER DATABASE [AccountingNote] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [AccountingNote] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [AccountingNote] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [AccountingNote] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [AccountingNote] SET DELAYED_DURABILITY = DISABLED 
-GO
-ALTER DATABASE [AccountingNote] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-EXEC sys.sp_db_vardecimal_storage_format N'AccountingNote', N'ON'
-GO
-ALTER DATABASE [AccountingNote] SET QUERY_STORE = OFF
-GO
 USE [AccountingNote]
 GO
-USE [AccountingNote]
-GO
-/****** Object:  Sequence [dbo].[hibernate_sequence]    Script Date: 2022/01/04 21:54:58 ******/
-CREATE SEQUENCE [dbo].[hibernate_sequence] 
- AS [bigint]
- START WITH 1
- INCREMENT BY 1
- MINVALUE -9223372036854775808
- MAXVALUE 9223372036854775807
- CACHE 
-GO
-/****** Object:  Table [dbo].[accounting_note]    Script Date: 2022/01/04 21:54:58 ******/
+/****** Object:  Table [dbo].[accounting_note]    Script Date: 2022/01/04 22:14:12 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,26 +20,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AccountingNote]    Script Date: 2022/01/04 21:54:58 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[AccountingNote](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[UserID] [uniqueidentifier] NOT NULL,
-	[Caption] [nvarchar](100) NULL,
-	[Amount] [int] NOT NULL,
-	[ActType] [int] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[Body] [nvarchar](500) NULL,
- CONSTRAINT [PK_AccountingNote] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[category]    Script Date: 2022/01/04 21:54:58 ******/
+/****** Object:  Table [dbo].[category]    Script Date: 2022/01/04 22:14:12 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +37,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[user_info]    Script Date: 2022/01/04 21:54:58 ******/
+/****** Object:  Table [dbo].[user_info]    Script Date: 2022/01/04 22:14:12 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -166,25 +54,6 @@ CREATE TABLE [dbo].[user_info](
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[UserInfo]    Script Date: 2022/01/04 21:54:58 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[UserInfo](
-	[ID] [uniqueidentifier] NOT NULL,
-	[Account] [varchar](50) NOT NULL,
-	[PWD] [varchar](50) NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
-	[Email] [nvarchar](100) NOT NULL,
-	[UserLevel] [int] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
- CONSTRAINT [PK_UserInfo] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -209,36 +78,6 @@ GO
 INSERT [dbo].[accounting_note] ([accid], [act_type], [amount], [body], [caption], [categoryid], [create_date], [userid]) VALUES (18, 1, 1, N'', N'', NULL, CAST(N'2021-12-17T16:05:31.103' AS DateTime), N'ee632f85-6c9b-4108-9c8b-d10f762094bf')
 GO
 SET IDENTITY_INSERT [dbo].[accounting_note] OFF
-GO
-SET IDENTITY_INSERT [dbo].[AccountingNote] ON 
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (3, N'ee632f85-6c9b-4108-9c8b-d10f762094bf', N'Caption', 99999, 0, CAST(N'2021-08-02T00:24:06.653' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (4, N'f662b62f-da06-4084-a432-53b05d26e653', N'Captiontest', 6666, 1, CAST(N'2021-08-02T22:46:31.960' AS DateTime), N'test')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (5, N'f67472d7-3dd3-44a8-9a5d-02da57d027c3', N'Caption', 24444, 1, CAST(N'2021-08-03T15:57:29.487' AS DateTime), N'')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (10, N'f662b62f-da06-4084-a432-53b05d26e653', N'1', 10000, 0, CAST(N'2021-08-03T23:26:28.867' AS DateTime), N'1')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (11, N'f662b62f-da06-4084-a432-53b05d26e653', N'2', 10000, 0, CAST(N'2021-08-03T23:26:47.367' AS DateTime), N'2')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (12, N'f662b62f-da06-4084-a432-53b05d26e653', N'3', 100000, 1, CAST(N'2021-08-03T23:27:03.733' AS DateTime), N'3')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (13, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 2333, 0, CAST(N'2021-08-05T22:45:41.257' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (14, N'f662b62f-da06-4084-a432-53b05d26e653', N'11155', 444, 1, CAST(N'2021-08-05T22:45:48.737' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (15, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 22, 0, CAST(N'2021-08-05T22:45:53.820' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (16, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 4444, 1, CAST(N'2021-08-05T22:46:00.767' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (17, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 55666, 0, CAST(N'2021-08-05T22:46:30.730' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (18, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 4444, 0, CAST(N'2021-08-05T22:46:35.930' AS DateTime), N'Desc')
-GO
-INSERT [dbo].[AccountingNote] ([ID], [UserID], [Caption], [Amount], [ActType], [CreateDate], [Body]) VALUES (19, N'f662b62f-da06-4084-a432-53b05d26e653', N'Caption', 55555, 0, CAST(N'2021-08-05T22:46:41.880' AS DateTime), N'Desc')
-GO
-SET IDENTITY_INSERT [dbo].[AccountingNote] OFF
 GO
 INSERT [dbo].[category] ([categoryid], [body], [caption], [create_date], [userid]) VALUES (N'6421f9aa-018a-4ad2-b3b6-02b0d7599346', N'', N'123456789', CAST(N'2021-12-15T16:41:01.323' AS DateTime), N'f662b62f-da06-4084-a432-53b05d26e653')
 GO
@@ -272,21 +111,9 @@ INSERT [dbo].[user_info] ([id], [account], [create_date], [email], [name], [pwd]
 GO
 INSERT [dbo].[user_info] ([id], [account], [create_date], [email], [name], [pwd], [user_level], [edit_date]) VALUES (N'ee632f85-6c9b-4108-9c8b-d10f762094bf', N'admin2', CAST(N'2021-08-06T09:15:46.000' AS DateTime), N'Test2@yahoo.com', N'test2', N'12345678', 1, CAST(N'2021-12-29T22:11:58.280' AS DateTime))
 GO
-INSERT [dbo].[UserInfo] ([ID], [Account], [PWD], [Name], [Email], [UserLevel], [CreateDate]) VALUES (N'f662b62f-da06-4084-a432-53b05d26e653', N'adminss', N'ssr', N'admin', N'admin@gmail.com', 0, CAST(N'2021-08-02T00:00:00.000' AS DateTime))
-GO
-INSERT [dbo].[UserInfo] ([ID], [Account], [PWD], [Name], [Email], [UserLevel], [CreateDate]) VALUES (N'ee632f85-6c9b-4108-9c8b-d10f762094bf', N'admin2', N'12345', N'Test2', N'Test2@yahoo.com', 1, CAST(N'2021-08-01T00:00:00.000' AS DateTime))
-GO
-INSERT [dbo].[UserInfo] ([ID], [Account], [PWD], [Name], [Email], [UserLevel], [CreateDate]) VALUES (N'89b363da-be0a-4b64-92ea-dd5c8697df67', N'admintest', N'12345', N'testname', N'testmail@333.com', 1, CAST(N'2021-08-06T09:15:46.240' AS DateTime))
-GO
-INSERT [dbo].[UserInfo] ([ID], [Account], [PWD], [Name], [Email], [UserLevel], [CreateDate]) VALUES (N'5ac60a39-94a7-491e-97dd-f170cb0bc268', N'admin777', N'88888888', N'testname', N'testmail@333.com', 1, CAST(N'2021-08-03T16:53:08.617' AS DateTime))
-GO
 ALTER TABLE [dbo].[accounting_note] ADD  DEFAULT (getdate()) FOR [create_date]
 GO
 ALTER TABLE [dbo].[category] ADD  DEFAULT (getdate()) FOR [create_date]
 GO
 ALTER TABLE [dbo].[user_info] ADD  DEFAULT (getdate()) FOR [create_date]
-GO
-USE [master]
-GO
-ALTER DATABASE [AccountingNote] SET  READ_WRITE 
 GO
