@@ -34,9 +34,8 @@ public class AccountingListController {
 	
 	@GetMapping("/SystemAdmin/AccountingList")
 	public String AccountList(Model model) {
-		//, @ModelAttribute("message") String message
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//驗證登入
 		{
             String url = "/default";
             LoginService.LoginSessionRemove(session);
@@ -60,9 +59,8 @@ public class AccountingListController {
 	@PostMapping("/SystemAdmin/AccountingList")
 	public String AccountListDel(@RequestParam(value = "ckbDelete", required = false) Integer[] AccountNoteDel, 
 			RedirectAttributes redirAttrs,Model model) {
-		//, @ModelAttribute("message") String message
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//驗證登入
 		{
             String url = "/default";
             LoginService.LoginSessionRemove(session);

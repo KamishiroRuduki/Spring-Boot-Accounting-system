@@ -44,6 +44,7 @@ public class UserInfoService {
 		repository.save(userInfo);
     }
 	
+    //檢查帳號是否重複
 	public boolean IsNotAccountCreated(String account) {
 	    if (repository.FindUserAccountByAccount(account) == 0) 
 			return true;

@@ -17,9 +17,9 @@ public class LoggerService {
 
         String path = System.getProperty("user.dir");//當前專案路徑
         path += "\\log.txt";
-        System.out.println(path);
-        String path2 = "D:\\log.txt";
-        File file = new File(path2);
+      //  System.out.println(path);
+      //  String path2 = "D:\\log.txt";
+        File file = new File(path);
             if(!file.exists()){
             file.getParentFile().mkdirs();
         }

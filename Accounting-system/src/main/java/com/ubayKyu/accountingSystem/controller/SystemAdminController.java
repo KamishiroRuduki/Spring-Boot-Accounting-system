@@ -32,6 +32,7 @@ public class SystemAdminController {
     @Autowired
     private AccountingNoteRepository AccountingNoteRepository;
     
+    //登出按鈕
 	@RequestMapping("/logout-button")
 	public String Logout(Model model) {
 		Object wkLoginID= session.getAttribute("LoginState");

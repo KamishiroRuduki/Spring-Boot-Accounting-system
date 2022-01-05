@@ -62,7 +62,6 @@ public class CategoryListController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String CategoryListDel(@RequestParam(value = "chbCategoryDel", required = false) String[] categoryDel, 
 			RedirectAttributes redirAttrs,Model model) {		
-		//@RequestParam(value = "categoryCount", required = false) String[] categoryCount,
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if (!loginCheck)// 檢查是否有登入
 		{

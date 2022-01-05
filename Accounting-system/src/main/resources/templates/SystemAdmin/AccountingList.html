@@ -46,49 +46,38 @@
     </td>
    </tr>
    <tr>
-							<td>
+		<td>
+              <table cellspacing="0" cellpadding="4" id="tblCategory"
+				style="color: #333333; border-collapse: collapse;">
+				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
+					<th scope="col"></th>
+					<th scope="col">建立日期</th>
+					<th scope="col">分類</th>
+					<th scope="col">收 / 支</th>
+					<th scope="col">金額</th>
+					<th scope="col">標題</th>
+					<th scope="col">Act</th>
+				</tr>
+				<tr th:each="AccountingNoteInterFace:${AccountingNoteList}">
+					<td><input type="checkbox" id="ckbDelete"
+							name="ckbDelete"
+							th:value=${AccountingNoteInterFace.getaccid()}></td>
+					<td th:text="${AccountingNoteInterFace.getcreate_date()}">CreateDate</td>
+					<td th:text="${AccountingNoteInterFace.getcategory_caption()} == NULL ? '未分類' : ${AccountingNoteInterFace.getcategory_caption()}">CategoryCaption</td>
+					<td th:text="${AccountingNoteInterFace.getact_type()} == 1 ? '收入' : '支出'">ActType</td>
+					<td th:styleappend="${AccountingNoteInterFace.getact_type()} == 1 ? 'color:Blue;' : 'color:Red;'"
+						th:text="${AccountingNoteInterFace.getact_type()} == 1 ? ${AccountingNoteInterFace.getamount()} : '('+${AccountingNoteInterFace.getamount()}+')'">Amount
+					</td>
+					<td th:text="${AccountingNoteInterFace.getcaption()}">Caption</td>
+					<td><a th:href="@{/SystemAdmin/AccountingDetail(accID=${AccountingNoteInterFace.getaccid()})}">Edit</a></td>
+				</tr>
 
 
-
-
-								<table cellspacing="0" cellpadding="4" id="tblCategory"
-									style="color: #333333; border-collapse: collapse;">
-									<tr
-										style="color: White; background-color: #507CD1; font-weight: bold;">
-										<th scope="col"></th>
-										<th scope="col">建立日期</th>
-										<th scope="col">分類</th>
-										<th scope="col">收 / 支</th>
-										<th scope="col">金額</th>
-										<th scope="col">標題</th>
-										<th scope="col">Act</th>
-									</tr>
-									<tr th:each="AccountingNoteInterFace:${AccountingNoteList}">
-										<td><input type="checkbox" id="ckbDelete"
-											name="ckbDelete"
-											th:value=${AccountingNoteInterFace.getaccid()}></td>
-										<td th:text="${AccountingNoteInterFace.getcreate_date()}">CreateDate</td>
-<!-- 										<td th:text="${AccountingNoteInterFace.getcategory_caption()}">CategoryCaption</td> -->
-										<td th:text="${AccountingNoteInterFace.getcategory_caption()} == NULL ? '未分類' : ${AccountingNoteInterFace.getcategory_caption()}">CategoryCaption</td>
-										<td
-											th:text="${AccountingNoteInterFace.getact_type()} == 1 ? '收入' : '支出'">ActType</td>
-										<td
-											th:styleappend="${AccountingNoteInterFace.getact_type()} == 1 ? 'color:Blue;' : 'color:Red;'"
-											th:text="${AccountingNoteInterFace.getact_type()} == 1 ? ${AccountingNoteInterFace.getamount()} : '('+${AccountingNoteInterFace.getamount()}+')'">Amount
-										</td>
-										<td th:text="${AccountingNoteInterFace.getcaption()}">Caption</td>
-										<td><a
-											th:href="@{/SystemAdmin/AccountingDetail(accID=${AccountingNoteInterFace.getaccid()})}">Edit</a></td>
-									</tr>
-
-
-								</table> <span id="table_page"></span>
-							</td>
-						</tr>
-
-     
+			</table> <span id="table_page"></span>
+		</td>
+	</tr>     
    </table>
-       </tr>
+   </tr>
 
      
    </table>

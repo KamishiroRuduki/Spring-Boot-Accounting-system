@@ -48,6 +48,7 @@ public class AccountingNoteService {
 		return accountingNote.getAccID();	
 	}
 	
+	//取得小計
 	public Integer getAccountingNoteAmountSumOfMonth(String userid, int actType, boolean thismonth){
 		Integer answer = null;
 		if(!thismonth) {

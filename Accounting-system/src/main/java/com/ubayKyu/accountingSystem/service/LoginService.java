@@ -17,13 +17,11 @@ public class LoginService {
 	@Autowired
 	static
 	LoggerService LoggerService;
-	static
-    String username;
 	@Autowired
 	HttpSession session;
 	
 
-public static void LoginSessionRemove(HttpSession session) {
+public static void LoginSessionRemove(HttpSession session) {//刪除session內的登入資訊
 	 session.removeAttribute("LoginState");
 
 	 }

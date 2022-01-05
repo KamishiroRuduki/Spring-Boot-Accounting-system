@@ -48,7 +48,6 @@ public class loginController {
 	@PostMapping("/login")
     public String getLoginCl(@RequestParam("txtAccount") String account, @RequestParam("txtPWD") String password,
     		RedirectAttributes redirAttrs,Model model) {
-//RedirectAttributes redirAttrs,
         boolean result = false;
         UserInfo2 userInfo = UserInfoRepository2.GetUserLogin(account, password);
 

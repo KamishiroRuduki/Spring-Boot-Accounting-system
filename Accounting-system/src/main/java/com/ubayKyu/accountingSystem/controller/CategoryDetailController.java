@@ -39,13 +39,13 @@ public class CategoryDetailController {
 	@GetMapping("/SystemAdmin/CategoryDetail")
 	public String CategoryDetail(@RequestParam(value = "CategoryID", required = false) String categoryid, Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//驗證登入
 		{
 			String url = "/default";
 			LoginService.LoginSessionRemove(session);
 			return "redirect:" + url;
 		}
-		if(categoryid != null) {
+		if(categoryid != null) {//編輯模式作資料回填
 			Optional<Category> category = CategoryService.getCategoryByCategoryid(categoryid);
 			model.addAttribute("CategoryCaption", category.get().getCaption());
 			model.addAttribute("CategoryDatetime", category.get().getCreateDate());
@@ -67,7 +67,7 @@ public class CategoryDetailController {
 
 		 */
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
-		if(!loginCheck)
+		if(!loginCheck)//驗證登入
 		{
 			String url = "/default";
 			LoginService.LoginSessionRemove(session);

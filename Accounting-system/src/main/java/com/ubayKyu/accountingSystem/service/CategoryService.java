@@ -48,29 +48,9 @@ public class CategoryService {
 		 CategoryRepository.save(category);
 	}
 	
-	public boolean IsCategoryCaptionCreated(String userid, String caption, String categoryid)
-	{		
-		int captionDB =  CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption);	
-		if(categoryid != null)		//編輯模式	
-		{	
-			Optional<Category> category = CategoryRepository.findById(categoryid);
-			if( captionDB == 0 )
-				return true;
-			else if ( category != null && category.get().getCaption().equals(caption) ) //標題可以是原本的標題
-				return true;
-			else
-			    return false;
-		}
-		else //新增模式
-		{			
-			if(captionDB == 0 )//判斷是否有重複的標題
-				return true;
-			else
-			    return false;
-		}
 
-	}
 	
+	//檢查標題重複
 	public boolean IsNotCategoryCaptionCreated(String userid, String caption, String categoryid) {
 		if (categoryid != null) // 編輯模式
 		{
