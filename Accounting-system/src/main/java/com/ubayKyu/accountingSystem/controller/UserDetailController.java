@@ -3,7 +3,6 @@ package com.ubayKyu.accountingSystem.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,19 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ubayKyu.accountingSystem.dto.User;
 import com.ubayKyu.accountingSystem.dto.UserInfoInterface;
-import com.ubayKyu.accountingSystem.entity.AccountingNote;
 import com.ubayKyu.accountingSystem.entity.UserInfo2;
-import com.ubayKyu.accountingSystem.repository.UserInfoRepository2;
-import com.ubayKyu.accountingSystem.service.FormatService;
 import com.ubayKyu.accountingSystem.service.LoginService;
 import com.ubayKyu.accountingSystem.service.UserInfoService;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 
 @Controller
 public class UserDetailController {
@@ -34,20 +28,20 @@ public class UserDetailController {
 	HttpSession session;
 	@Autowired
 	UserInfoService UserInfoService;
+	UrlPath UrlPath;
 	@GetMapping("/SystemAdmin/UserDetail")
 	public String UserDetail(@RequestParam(value = "userID", required = false) String userID, RedirectAttributes redirectAttrs,Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//檢查是否有登入
 		{
-            String url = "/default";
-            LoginService.LoginSessionRemove(session);
-            return "redirect:" + url;
+			LoginService.LoginSessionRemove(session);
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		UserInfo2 user =  (UserInfo2) session.getAttribute("LoginState");
 		if(user.getUserLevel() < 1 )//檢查權限
 		{
 			redirectAttrs.addFlashAttribute("message", "你的權限不足，無法訪問該頁面");
-			return "redirect:/SystemAdmin/UserProfile";
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		}
 		if( userID != null)//編輯模式下把該使用者的資訊做回填
 		{
@@ -59,7 +53,7 @@ public class UserDetailController {
 			model.addAttribute("EditTime", userInfo.get().getedit_date());
 			model.addAttribute("UserLevel", userInfo.get().getuser_level());
 		}
-		return "SystemAdmin/UserDetail";
+		return UrlPath.URL_USERDETAIL;
 	}
 
 	@PostMapping("/SystemAdmin/UserDetail")
@@ -76,9 +70,8 @@ public class UserDetailController {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//檢查是否有登入
 		{
-			String url = "/default";
 			LoginService.LoginSessionRemove(session);
-			return "redirect:" + url;
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		}
 
 
@@ -100,9 +93,9 @@ public class UserDetailController {
 			redirAttrs.addFlashAttribute("message", message);
 			//判斷是新增還是編輯，決定回傳地址
 			if(userID != null)
-				return "redirect:/SystemAdmin/UserDetail?userID=" + userID;
+				return "redirect:" + UrlPath.URL_USERDETAIL+ "?userID=" + userID;
 			else
-		   	    return "redirect:/SystemAdmin/UserDetail";
+		   	    return "redirect:"+UrlPath.URL_USERDETAIL;
 		}
 
 		
@@ -129,7 +122,7 @@ public class UserDetailController {
 		}
 
 		redirAttrs.addFlashAttribute("message", message);
-		return "redirect:/SystemAdmin/UserDetail?userID=" + userID;
+		return "redirect:" + UrlPath.URL_USERDETAIL+ "?userID=" + userID;
 		
 
 	}

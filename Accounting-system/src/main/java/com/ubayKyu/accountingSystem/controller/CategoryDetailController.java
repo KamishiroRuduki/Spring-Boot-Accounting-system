@@ -3,31 +3,24 @@ package com.ubayKyu.accountingSystem.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.hql.spi.id.cte.CteValuesListUpdateHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ubayKyu.accountingSystem.dto.User;
 import com.ubayKyu.accountingSystem.entity.Category;
 import com.ubayKyu.accountingSystem.entity.UserInfo2;
 import com.ubayKyu.accountingSystem.service.LoginService;
-import com.ubayKyu.accountingSystem.service.UserInfoService;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import com.ubayKyu.accountingSystem.service.CategoryService;
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 
 @Controller
 public class CategoryDetailController {
@@ -35,15 +28,14 @@ public class CategoryDetailController {
 	HttpSession session;
 	@Autowired
 	private CategoryService CategoryService;
-	
+	private UrlPath UrlPath;
 	@GetMapping("/SystemAdmin/CategoryDetail")
 	public String CategoryDetail(@RequestParam(value = "CategoryID", required = false) String categoryid, Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//驗證登入
 		{
-			String url = "/default";
 			LoginService.LoginSessionRemove(session);
-			return "redirect:" + url;
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		if(categoryid != null) {//編輯模式作資料回填
 			Optional<Category> category = CategoryService.getCategoryByCategoryid(categoryid);
@@ -54,7 +46,7 @@ public class CategoryDetailController {
 			model.addAttribute("CategoryBody", category.get().getBody());
 		}
 
-		return "SystemAdmin/CategoryDetail";
+		return UrlPath.URL_CATEGORYDETAIL;
 	}
 	
 	@PostMapping("/SystemAdmin/CategoryDetail")
@@ -69,9 +61,8 @@ public class CategoryDetailController {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//驗證登入
 		{
-			String url = "/default";
 			LoginService.LoginSessionRemove(session);
-			return "redirect:" + url;
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");		
@@ -80,9 +71,9 @@ public class CategoryDetailController {
 			String url;
 			//判斷是新增還是編輯，決定回傳地址
 			if(categoryid != null)
-			   url = "/SystemAdmin/CategoryDetail?CategoryID=" + categoryid;
+			   url = UrlPath.URL_CATEGORYDETAIL +"?CategoryID=" + categoryid;
 			else
-			   url = "/SystemAdmin/CategoryDetail";
+			   url =  UrlPath.URL_CATEGORYDETAIL;
 			redirAttrs.addFlashAttribute("message", "此分類標題已經存在");			
 			return "redirect:" + url;
 		}
@@ -100,8 +91,7 @@ public class CategoryDetailController {
 		
 		CategoryService.CategorySave(User.getId(), txtCaption, txtBody, categoryid,  date);
 		redirAttrs.addFlashAttribute("message", message);
-		String url = "/SystemAdmin/CategoryDetail?CategoryID=" + categoryid;
-		return "redirect:" + url;
+		return "redirect:" + UrlPath.URL_CATEGORYDETAIL +"?CategoryID=" + categoryid;
 		
 
 	}

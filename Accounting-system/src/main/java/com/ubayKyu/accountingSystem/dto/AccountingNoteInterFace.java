@@ -2,21 +2,21 @@ package com.ubayKyu.accountingSystem.dto;
 
 public interface AccountingNoteInterFace {
 
-    Integer getaccid();
+	Integer getaccid();
 
-    Integer getact_type();
+	Integer getact_type();
 
-    Integer getamount();
+	Integer getamount();
 
-    String getbody();
+	String getbody();
 
-    String getcaption();
+	String getcaption();
 
-    String getcategoryid();
+	String getcategoryid();
 
-    String getcreate_date();
+	String getcreate_date();
 
-    String getuserid();
+	String getuserid();
 
-    String getcategory_caption();
+	String getcategory_caption();
 }

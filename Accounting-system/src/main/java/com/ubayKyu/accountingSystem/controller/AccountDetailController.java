@@ -3,32 +3,27 @@ package com.ubayKyu.accountingSystem.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-import javax.persistence.Convert;
+
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ubayKyu.accountingSystem.dto.User;
 import com.ubayKyu.accountingSystem.entity.AccountingNote;
 import com.ubayKyu.accountingSystem.entity.Category;
 import com.ubayKyu.accountingSystem.entity.UserInfo2;
 import com.ubayKyu.accountingSystem.service.AccountingNoteService;
 import com.ubayKyu.accountingSystem.service.CategoryService;
-import com.ubayKyu.accountingSystem.service.FormatService;
 import com.ubayKyu.accountingSystem.service.LoginService;
-import com.ubayKyu.accountingSystem.service.UserInfoService;
+import com.ubayKyu.accountingSystem.service.common.FormatService;
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 
-import groovyjarjarantlr4.v4.runtime.ParserInterpreter;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class AccountDetailController {
@@ -37,18 +32,16 @@ public class AccountDetailController {
 	@Autowired
 	private CategoryService CategoryService;
 	@Autowired
-	private UserInfoService UserInfoService;
-	@Autowired
 	private AccountingNoteService AccountingNoteService;
+	private UrlPath UrlPath;
 	
 	@GetMapping("/SystemAdmin/AccountingDetail")
 	public String AccountDetail(@RequestParam(value = "accID", required = false) String accID,Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)
 		{
-            String url = "/default";
-            LoginService.LoginSessionRemove(session);
-            return "redirect:" + url;
+			LoginService.LoginSessionRemove(session);
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		Integer accountingid = FormatService.parseIntOrNull(accID);
 		if( accountingid != null)
@@ -63,8 +56,8 @@ public class AccountDetailController {
 		}
 		UserInfo2 user =  (UserInfo2) session.getAttribute("LoginState");
 		List<Category> categoryList = CategoryService.getCategoryByUserID(user.getId());
-        model.addAttribute("CategoryList", categoryList);
-		return "SystemAdmin/AccountingDetail";
+		model.addAttribute("CategoryList", categoryList);
+		return UrlPath.URL_ACCOUNTINGDETAIL;
 	}
 
 	@PostMapping("/SystemAdmin/AccountingDetail")
@@ -82,30 +75,29 @@ public class AccountDetailController {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)
 		{
-			String url = "/default";
 			LoginService.LoginSessionRemove(session);
-			return "redirect:" + url;
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		//-------------------------驗證輸入資料，不正確的話直接return並跳出錯誤訊息-------------------------------
-		Integer amount = Integer.parseInt(txtAmount);
+		Integer amount = FormatService.parseIntOrNull(txtAmount);
 		String message = "";
-        if(amount == null)
-            message += "金額不可為空\n";
+		if(amount == null)
+			message += "金額不可為空\n";
 
-        if(txtCaption.isEmpty() || txtCaption == null)
-            message += "標題不可為空\n";
-        
-        if( amount > 10000000 || amount < 0)
-        	message += "輸入金額不能超過1000萬或為負數\n";
-        
-        if(!message.isEmpty())
-        {
-            redirAttrs.addFlashAttribute("message", message);
-            if(accID != null)
-                return "redirect:/SystemAdmin/AccountingDetail?accID=" + accID;
-            else 
-                return "redirect:/SystemAdmin/AccountingDetail";
-        }
+		if( txtCaption == null || txtCaption.isEmpty())
+			message += "標題不可為空\n";
+
+		if(amount != null && (amount > 10000000 || amount < 0))
+			message += "輸入金額不能超過1000萬或為負數\n";
+
+		if(!message.isEmpty())
+		{
+			redirAttrs.addFlashAttribute("message", message);
+			if(accID != null)
+				return "redirect:" + UrlPath.URL_ACCOUNTINGDETAIL+ "?accID=" + accID;
+			else 
+				return "redirect:"+ UrlPath.URL_ACCOUNTINGDETAIL;
+		}
 		//-------------------------驗證輸入資料，不正確的話直接return並跳出錯誤訊息-------------------------------
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");	
 		Integer accountingid = FormatService.parseIntOrNull(accID); //檢查accID是否為數字，不是的話取得NULL
@@ -130,8 +122,7 @@ public class AccountDetailController {
 		}
 		accID = (AccountingNoteService.saveAccountingNote(accountingNote)).toString();
 		redirAttrs.addFlashAttribute("message", message);
-		String url = "/SystemAdmin/AccountingDetail?accID=" + accID;
-		return "redirect:" + url;
+		return "redirect:" + UrlPath.URL_ACCOUNTINGDETAIL+ "?accID=" + accID;
 		
 
 	}

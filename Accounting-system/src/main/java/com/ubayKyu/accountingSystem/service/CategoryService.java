@@ -41,7 +41,7 @@ public class CategoryService {
 	
 	public Optional<Category> getCategoryByCategoryid(String categoryid){
 		return CategoryRepository.findById(categoryid);
-			
+		
 	}
 	
 	public void saveCategory(Category category) {
@@ -52,20 +52,19 @@ public class CategoryService {
 	
 	//檢查標題重複
 	public boolean IsNotCategoryCaptionCreated(String userid, String caption, String categoryid) {
-		if (categoryid != null) // 編輯模式
-		{
-			Optional<Category> category = CategoryRepository.findById(categoryid);
-			if ( category != null && category.get().getCaption().equals(caption) )//標題可以是原本的標題
-				return true;
-			else if (CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption) == 0) 
-				return true;
-			else
-				return false;
-		} 
-		else if (CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption) == 0) 
+		Optional<Category> category = null;
+		if (categoryid != null)// 編輯模式
+			category = CategoryRepository.findById(categoryid);
+		
+		if ( category != null && category.get().getCaption().equals(caption) )//標題可以是原本的標題
 			return true;
-		else
-			return false;
+		else 
+			return (CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption) == 0); 
+//		else if (CategoryRepository.FindCategoryCaptionByCaptionAndUserID(userid, caption) == 0) 
+//			return true;
+//		else
+//			return false;
+		 
 
 	}
 	
@@ -77,9 +76,8 @@ public class CategoryService {
 		category.setCaption(txtCaption);
 		category.setUserID(userID);
 		category.setCreateDate(dateTime);
-        CategoryRepository.save(category);
+		CategoryRepository.save(category);
     }
-    
 
 }
 

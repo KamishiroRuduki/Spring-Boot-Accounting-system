@@ -23,67 +23,67 @@ import lombok.NoArgsConstructor;
 @Table(name = "Category")
 public class Category {
  
-    @Id 
-    @Column(name="CategoryID", nullable=false, columnDefinition="uniqueidentifier")
-    private String CategoryID;
-    
- @Column(name="UserID", nullable=false, columnDefinition="uniqueidentifier")
-    private String UserID;
+	@Id 
+	@Column(name="CategoryID", nullable=false, columnDefinition="uniqueidentifier")
+	private String CategoryID;
+
+	@Column(name="UserID", nullable=false, columnDefinition="uniqueidentifier")
+	private String UserID;
  
-    @Column(name="Caption", nullable=false, columnDefinition="nvarchar(100)")
-    private String Caption;
-    
-    @Column(name="Body", nullable=true, columnDefinition="nvarchar(500)")
-    private String Body;
+	@Column(name="Caption", nullable=false, columnDefinition="nvarchar(100)")
+	private String Caption;
 
- @Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
- private LocalDateTime CreateDate;
+	@Column(name="Body", nullable=true, columnDefinition="nvarchar(500)")
+	private String Body;
 
- public String getCategoryID() {
-  return CategoryID;
- }
+	@Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
+	private LocalDateTime CreateDate;
 
- public void setCategoryID(String categoryID) {
-  CategoryID = categoryID;
- }
+	public String getCategoryID() {
+		return CategoryID;
+	}
 
- public String getUserID() {
-  return UserID;
- }
+	public void setCategoryID(String categoryID) {
+		CategoryID = categoryID;
+	}
 
- public void setUserID(String userID) {
-  UserID = userID;
- }
+	public String getUserID() {
+		return UserID;
+	}
 
- public String getCaption() {
-  return Caption;
- }
+	public void setUserID(String userID) {
+		UserID = userID;
+	}
 
- public void setCaption(String caption) {
-  Caption = caption;
- }
+	public String getCaption() {
+		return Caption;
+	}
 
- public String getBody() {
-  return Body;
- }
+	public void setCaption(String caption) {
+		Caption = caption;
+	}
 
- public void setBody(String body) {
-  Body = body;
- }
+	public String getBody() {
+		return Body;
+	}
 
- public LocalDateTime getCreateDate() {
-  return CreateDate;
- }
+	public void setBody(String body) {
+		Body = body;
+	}
 
- public void setCreateDate(LocalDateTime createDate) {
-  CreateDate = createDate;
- }
+	public LocalDateTime getCreateDate() {
+		return CreateDate;
+	}
 
- @Override
- public String toString() {
-  return "Category [CategoryID=" + CategoryID + ", UserID=" + UserID + ", Caption=" + Caption + ", Body=" + Body
-    + ", CreateDate=" + CreateDate + "]";
- }
+	public void setCreateDate(LocalDateTime createDate) {
+		CreateDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [CategoryID=" + CategoryID + ", UserID=" + UserID + ", Caption=" + Caption + ", Body=" + Body
+				+ ", CreateDate=" + CreateDate + "]";
+	}
  
 }
 

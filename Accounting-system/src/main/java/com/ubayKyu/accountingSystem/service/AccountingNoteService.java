@@ -51,13 +51,13 @@ public class AccountingNoteService {
 	//取得小計
 	public Integer getAccountingNoteAmountSumOfMonth(String userid, int actType, boolean thismonth){
 		Integer answer = null;
-		if(!thismonth) {
+		if(!thismonth) {//全部的時間區間
 			LocalDateTime minDateTime = LocalDateTime.of(1900, 1, 1, 0, 0);
 			//LocalDateTime maxDateTime = LocalDateTime.now();
 			LocalDateTime maxDateTime = LocalDateTime.of(2500, 12, 31, 23, 59,59,999999);
-	  	    answer = AccountingNoteRepository.FindAccountingNoteAmount(userid, actType, minDateTime, maxDateTime);
+			answer = AccountingNoteRepository.FindAccountingNoteAmount(userid, actType, minDateTime, maxDateTime);
 		}
-		else {
+		else {//當月
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONTH, 0);
 		c.set(Calendar.DAY_OF_MONTH, 1);//設定為當月第一天
@@ -69,14 +69,14 @@ public class AccountingNoteService {
 		LocalDate lastdate = LocalDate.ofInstant(last.toInstant(), ZoneId.systemDefault());//轉換成LocalDate
 		LocalDateTime firstdatetime = firstdate.atTime(LocalTime.MIN);//賦予時分秒(00:00:00)
 		LocalDateTime lastdatetime = lastdate.atTime(LocalTime.MAX);//賦予時分秒(23:59:59)
-         answer = AccountingNoteRepository.FindAccountingNoteAmount(userid, actType, firstdatetime, lastdatetime);
+		answer = AccountingNoteRepository.FindAccountingNoteAmount(userid, actType, firstdatetime, lastdatetime);
 		}
 		
-        if(answer == null) {
-            answer=0;
-        }
-        
-        return answer; 
+		if(answer == null) {
+			answer=0;
+		}
+		
+		return answer; 
 	}
 	
 	public void deleteAccountingNoteByAccountingNoteID(int accountingNoteid){

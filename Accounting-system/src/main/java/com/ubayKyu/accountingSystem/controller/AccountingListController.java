@@ -1,11 +1,6 @@
 package com.ubayKyu.accountingSystem.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ubayKyu.accountingSystem.service.AccountingNoteService;
-import com.ubayKyu.accountingSystem.service.CategoryService;
 import com.ubayKyu.accountingSystem.service.LoginService;
 import com.ubayKyu.accountingSystem.dto.AccountingNoteInterFace;
-import com.ubayKyu.accountingSystem.dto.User;
 import com.ubayKyu.accountingSystem.entity.UserInfo2;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 
 @Controller
 public class AccountingListController {
@@ -31,29 +23,28 @@ public class AccountingListController {
 	HttpSession session;
 	@Autowired
 	private AccountingNoteService AccountingNoteService;
-	
+	private UrlPath UrlPath;
 	@GetMapping("/SystemAdmin/AccountingList")
 	public String AccountList(Model model) {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//驗證登入
 		{
-            String url = "/default";
-            LoginService.LoginSessionRemove(session);
-            return "redirect:" + url;
+			LoginService.LoginSessionRemove(session);
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		UserInfo2 User= (UserInfo2) session.getAttribute("LoginState");
 		//傳至前台用的流水帳列表自訂MODEL
-        List<AccountingNoteInterFace> AccountingNoteList = AccountingNoteService.getAccountingNoteInterfaceListByUserID(User.getId());
-        //小計
-        Integer AmountSum = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,false) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0,false));
-        //當月小計
-        Integer AmountSumOfMonth = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,true) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0, true));
-        model.addAttribute("AccountingNoteList", AccountingNoteList);
+		List<AccountingNoteInterFace> AccountingNoteList = AccountingNoteService.getAccountingNoteInterfaceListByUserID(User.getId());
+		//小計
+		Integer AmountSum = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,false) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0,false));
+		//當月小計
+		Integer AmountSumOfMonth = (AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 1,true) - AccountingNoteService.getAccountingNoteAmountSumOfMonth(User.getId(), 0, true));
+		model.addAttribute("AccountingNoteList", AccountingNoteList);
 		model.addAttribute("subtotal", AmountSum);
 		model.addAttribute("subtotalofmonth", AmountSumOfMonth);
 		
 
-		return "SystemAdmin/AccountingList.html";
+		return UrlPath.URL_ACCOUNTINGLIST;
 	}
 	
 	@PostMapping("/SystemAdmin/AccountingList")
@@ -62,9 +53,8 @@ public class AccountingListController {
 		boolean loginCheck = LoginService.LoginSessionCheck(session);
 		if(!loginCheck)//驗證登入
 		{
-            String url = "/default";
-            LoginService.LoginSessionRemove(session);
-            return "redirect:" + url;
+			LoginService.LoginSessionRemove(session);
+			return "redirect:" + UrlPath.URL_DEFAULT;
 		}
 		
 		if (AccountNoteDel != null ) {//假如checkbox有被勾選
@@ -76,7 +66,7 @@ public class AccountingListController {
 		else
 			redirAttrs.addFlashAttribute("message", "並未勾選");
 		
-		return "redirect:AccountingList";
+		return "redirect:" + UrlPath.URL_ACCOUNTINGLIST;
 	}
 
 }

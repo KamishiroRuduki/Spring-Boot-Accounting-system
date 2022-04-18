@@ -1,4 +1,4 @@
-package com.ubayKyu.accountingSystem.service;
+package com.ubayKyu.accountingSystem.service.common;
 
 import java.io.BufferedWriter;
 import java.io.File;

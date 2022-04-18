@@ -2,17 +2,17 @@ package com.ubayKyu.accountingSystem.dto;
 
 public interface UserInfoInterface {
 	
-    String getid();
+	String getid();
 
-    String getaccount();
+	String getaccount();
 
-    String getcreate_date();
+	String getcreate_date();
 
-    String getemail();
+	String getemail();
 
-    String getname();
+	String getname();
 
-    Integer getuser_level();
-    
-    String getedit_date();
+	Integer getuser_level();
+
+	String getedit_date();
 }

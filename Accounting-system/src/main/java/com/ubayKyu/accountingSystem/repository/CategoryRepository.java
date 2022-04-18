@@ -19,7 +19,7 @@ import com.ubayKyu.accountingSystem.dto.CategoryInterFace;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,String>{
 
-	
+	//取得自定義的分類資料
 	@Query(value = "  SELECT category.categoryid"
 			+ "      ,category.body"
 			+ "      ,category.caption"
@@ -31,6 +31,7 @@ public interface CategoryRepository extends JpaRepository<Category,String>{
 			+ "  WHERE category.userid =:userid"
 			+ "  GROUP   BY category.categoryid ,category.body ,category.caption ,category.create_date,category.userid", nativeQuery = true)
 	List<CategoryInterFace> FindCategoryModelListByUserid(@Param("userid") String userid);
+	
 	
 	@Query(value = "  SELECT COUNT(accounting_note.categoryid) count"
 			+ "  FROM category category"
